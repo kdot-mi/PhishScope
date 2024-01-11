@@ -1,2 +1,13 @@
-# Phishing-Detection
-USF CIS4935 - Senior Project in IT
+# Phishing Detection
+<div align="center">
+</div>
+
+<!-- TABLE OF CONTENTS -->
+
+
+<!-- ABOUT THE PROJECT -->
+## About the Project
+
+<!-- Built With -->
+### Built With
+
