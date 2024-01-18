@@ -1,4 +1,4 @@
-# Phishing Detection
+# Phishing Detection App
 <div align="center">
 </div>
 
