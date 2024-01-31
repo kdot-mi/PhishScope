@@ -1,4 +1,5 @@
 # Use a pipeline as a high-level helper
+# Need to install pytorch and transformers to run below file
 from transformers import pipeline
 import warnings
 import re
