@@ -1,4 +1,4 @@
-# Phishing Detection App
+# PhishScope
 <div align="center">
 </div>
 
