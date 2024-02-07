@@ -4,13 +4,70 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PhishScope - Upload Email</title>
+    <!-- CSS -->
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- JQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" crossorigin="anonymous"></script>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" crossorigin="anonymous">
 </head>
 <body>
-    <h1>PhishScope</h1>
-    <p>Upload your email file for analysis.</p>
-    <form action="/upload" method="post" enctype="multipart/form-data">
-        <input type="file" name="file">
-        <input type="submit" value="Upload">
-    </form>
+    <h1 style="text-align: center;">PhishScope</h1>
+
+    <div class="container">
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#emailScanner">Email Scanner</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#urlScanner">URL Scanner</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#About">About</a>
+            </li>
+        </ul>
+    
+        <div class="tab-content">
+            <div id="emailScanner" class="tab-pane fade show active"> 
+                <!-- Content for Email Scanner  tab -->
+                <p>Upload your email file for analysis.</p>
+                <form action="/upload" method="post" enctype="multipart/form-data">
+                    <input type="file" name="file">
+                    <input type="submit" value="Upload">
+                </form>
+            </div>
+            <div id="urlScanner" class="tab-pane fade">
+                <!-- Content for URL Scanner tab -->
+                <p>Detect if a URL has a phshing link or is malicious.</p>
+                <form action="/url" method="post">
+                    <input type="text" name="url">
+                    <input type="submit" value="Check URL">
+                </form>
+            
+            </div>
+            <div id="About" class="tab-pane fade">
+                <!-- Content for About  tab -->
+                <p>What is PhishScope?</p>
+                <p>PhishScope is a tool that allows you to scan emails, URLs, and typosquatting domains for phishing links and malicious content.</p>
+
+                <p>How does it work?</p>
+                <p>PhishScope uses machine learning to analyze emails and URLs for phishing links and malicious content. It also monitors typosquatting domains to detect potential phishing attacks.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+    $(function () {
+      $('.nav-link').on('click', function (e) {
+        e.preventDefault()
+        $(this).tab('show')
+      })
+    })
+    </script>
 </body>
 </html>
