@@ -1,4 +1,5 @@
 from flask import Flask, request, redirect, url_for, render_template, flash
+import time 
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'  # Needed for flash messages and sessions
@@ -13,7 +14,7 @@ def allowed_file(filename):
 @app.route('/')
 def index():
     # Render the upload form template
-    return render_template('upload.html')
+    return render_template('upload.html', time=time) 
 
 @app.route('/upload', methods=['POST'])
 def upload_file():
