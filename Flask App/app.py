@@ -34,5 +34,22 @@ def upload_file():
             return redirect(url_for('index'))
     return redirect(url_for('index'))
 
+@app.route('/url', methods=['POST'])
+def upload_url():
+    if request.method == 'POST':
+        # Check if the post request has the URL part
+        if 'url' not in request.form:
+            flash('No URL part')
+            return redirect(request.url)
+        url = request.form['url']
+        # If user does not enter URL
+        if url == '':
+            flash('No URL entered')
+            return redirect(request.url)
+        # Here, you can add your processing logic
+        flash('URL successfully uploaded')
+        return redirect(url_for('index'))
+    return redirect(url_for('index'))
+
 if __name__ == '__main__':
     app.run(debug=True, port=9001)
