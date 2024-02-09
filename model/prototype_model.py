@@ -1,11 +1,11 @@
 # Use a pipeline as a high-level helper
 # Need to install pytorch and transformers to run below file
 from transformers import pipeline
-import warnings
-import re
+# import warnings
+# import re
 
 # filter out depecrated warning
-warnings.filterwarnings("ignore", message="TypedStorage is deprecated", category=UserWarning)
+# warnings.filterwarnings("ignore", message="TypedStorage is deprecated", category=UserWarning)
 
 pipe = pipeline("text-classification", model="ealvaradob/bert-finetuned-phishing")
 
