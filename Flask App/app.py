@@ -1,5 +1,7 @@
 from flask import Flask, request, redirect, url_for, render_template, flash
 import time 
+from model import check_phishing
+
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'  # Needed for flash messages and sessions
@@ -30,8 +32,11 @@ def upload_file():
             flash('No selected file')
             return redirect(request.url)
         if file and allowed_file(file.filename):
-            # Here, you can add your processing logic
-            flash('File successfully uploaded')
+            content = file.read().decode('utf-8')  # Assuming the file is text-based
+            phishing_result = check_phishing(content)
+            # Handle phishing_result as needed, e.g., flash a message to the user
+            flash('File successfully uploaded. ')
+            flash(str(phishing_result))
             return redirect(url_for('index'))
     return redirect(url_for('index'))
 

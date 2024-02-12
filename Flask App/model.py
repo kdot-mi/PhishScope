@@ -4,4 +4,4 @@ from transformers import pipeline
 def check_phishing(text):
     pipe = pipeline("text-classification", model="foghlaimeoir/phishing-DistilBERT")
     res = pipe(text)
-    print(res)
+    return res
