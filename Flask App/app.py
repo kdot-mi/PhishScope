@@ -1,6 +1,7 @@
 from flask import Flask, request, redirect, url_for, render_template, flash
 import time 
-from model import check_phishing
+# from model for distilBERT, from model2 for BERT
+from model2 import check_phishing
 
 
 app = Flask(__name__)
