@@ -14,8 +14,8 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" crossorigin="anonymous">
 </head>
 <body>
-    <h1 style="text-align: center;">PhishScope</h1>
-
+    
+    <img src="{{ url_for('static', filename='phishscope12.svg') }}" alt="PhishScope" style="display: block; margin-left: auto; margin-right: auto; width: 50%;">
     <div class="container">
         <!-- Flash messages -->
         {% with messages = get_flashed_messages(with_categories=true) %}
@@ -85,3 +85,4 @@
     </script>
 </body>
 </html>
+```
