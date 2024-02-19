@@ -1,7 +1,11 @@
 from flask import Flask, request, redirect, url_for, render_template, flash
-import time 
+import requests
+import os
+import time
+from time import sleep
 # from model for distilBERT, from model2 for BERT
 from model2 import check_phishing
+from config import VIRUSTOTAL_API_KEY
 
 
 app = Flask(__name__)
@@ -39,6 +43,55 @@ def upload_file():
             flash('File successfully uploaded. ')
             flash(str(phishing_result))
             return redirect(url_for('index'))
+    return redirect(url_for('index'))
+
+@app.route('/attachment-upload', methods=['POST'])
+def attachment_upload():
+    # Check if a file is part of the uploaded request
+    if 'attachment' not in request.files:
+        flash('No file part')
+        return redirect(url_for('index'))
+
+    # Retrieve the file from the form
+    file = request.files['attachment']
+    
+    # Check if the filename is not empty and allowed
+    if file.filename == '':
+        flash('No selected file')
+        return redirect(url_for('index'))
+    
+    if file and allowed_file(file.filename):
+        # Prepare the request to VirusTotal
+        files = {'file': (file.filename, file.stream, 'application/octet-stream')}
+        headers = {'x-apikey': VIRUSTOTAL_API_KEY}
+
+        # Send the file to the VirusTotal API for scanning
+        response = requests.post('https://www.virustotal.com/api/v3/files', files=files, headers=headers)
+        
+        # Check if the request was successful
+        if response.status_code == 200:
+            json_response = response.json()
+            resource_id = json_response['data']['id']
+        
+        # Wait for 10 seconds before attempting to retrieve the report
+            sleep(10)
+
+        # Make a GET request to retrieve the file report
+            report_url = f"https://www.virustotal.com/api/v3/analyses/{resource_id}"
+            report_headers = {"accept": "application/json", "x-apikey": VIRUSTOTAL_API_KEY}
+            report_response = requests.get(report_url, headers=report_headers)
+
+        if report_response.status_code == 200:
+            report = report_response.json()
+            stats = report['data']['attributes']['stats']
+    
+    # Instead of redirecting, render the 'upload.html' template with the results
+            return render_template('upload.html', stats=stats, show_results=True, current_time=time.time())
+        else:
+            flash('Failed to retrieve the report.')
+    else:
+        flash('Failed to scan the file. Please try again.')
+
     return redirect(url_for('index'))
 
 @app.route('/url', methods=['POST'])

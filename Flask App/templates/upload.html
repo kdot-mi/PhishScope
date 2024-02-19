@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PhishScope - Upload Email</title>
     <!-- CSS -->
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css', v=time.time()) }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css', v=current_time) }}">
     
     <!-- JQuery -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" crossorigin="anonymous"></script>
@@ -36,6 +36,9 @@
                 <a class="nav-link active" data-toggle="tab" href="#emailScanner">Email Scanner</a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#attachmentScanner">Attachment Scanner</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" data-toggle="tab" href="#urlScanner">URL Scanner</a>
             </li>
             <li class="nav-item">
@@ -52,6 +55,14 @@
                     <input type="submit" value="Upload">
                 </form>
             </div>
+            <div id="attachmentScanner" class="tab-pane fade"> 
+                <!-- Content for Attachment Scanner tab -->
+                <p>Upload your attachment file for scanning.</p>
+                <form action="/attachment-upload" method="post" enctype="multipart/form-data">
+                    <input type="file" name="attachment"> <!-- Changed the name attribute to 'attachment' -->
+                    <input type="submit" value="Scan Attachment">
+                </form>
+            </div>            
             <div id="urlScanner" class="tab-pane fade">
                 <!-- Content for URL Scanner tab -->
                 <p>Detect if a URL has a phishing link or is malicious.</p>
@@ -71,6 +82,17 @@
             </div>
         </div>
     </div>
+
+    {% if show_results %}
+    <div class="text-center mt-4">
+        <h3>Scan Results</h3>
+        <p>Malicious: {{ stats.malicious }}</p>
+        <p>Suspicious: {{ stats.suspicious }}</p>
+        <p>Undetected: {{ stats.undetected }}</p>
+        <p>Harmless: {{ stats.harmless }}</p>
+        <!-- ... other stats as needed -->
+    </div>
+    {% endif %}
 
     <!-- Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
