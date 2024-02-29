@@ -27,11 +27,6 @@ body{
     width: 100%;
 }
 
-.icon{
-    font-size: 50px;
-    color: grey;
-}
-
 .container img{
     width: 75%;
     height: auto;
@@ -64,6 +59,11 @@ body{
     flex-direction: column;
     border-radius: 5px;
     border: 2px dashed gray;
+}
+
+.custom-container .img1{
+    font-size: 50px;
+    color: grey;
 }
 
 form p{
