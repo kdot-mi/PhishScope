@@ -12,12 +12,32 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" crossorigin="anonymous">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,500;1,500&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
-    
-    <img src="{{ url_for('static', filename='phishscope12.svg') }}" alt="PhishScope" style="display: block; margin-left: auto; margin-right: auto; width: 50%;">
-    <div class="container">
-        <!-- Flash messages -->
+    <!-- Testing New UI -->
+    <div class="container" >
+        
+        <img src="{{ url_for('static', filename='phishscope14.svg') }}" alt="PhishScope">
+
+        <div class="custom-container">
+            <header>Upload Your Email File</header>
+            <form action="/upload" method="post" enctype="multipart/form-data">
+                <div class="file-upload">
+                    <input type="file" name="file">
+                </div>
+                <input type="submit" value="Upload">
+            </form>
+        </div>
+
+        <!-- Flash Message -->
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
                 {% for category, message in messages %}
@@ -30,58 +50,30 @@
                 {% endfor %}
             {% endif %}
         {% endwith %}
-        
-        <ul class="nav nav-tabs justify-content-center">
-            <li class="nav-item">
-                <a class="nav-link active" data-toggle="tab" href="#emailScanner">Email Scanner</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#attachmentScanner">Attachment Scanner</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#urlScanner">URL Scanner</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#About">About</a>
-            </li>
-        </ul>
-    
-        <div class="tab-content">
-            <div id="emailScanner" class="tab-pane fade show active"> 
-                <!-- Content for Email Scanner  tab -->
-                <p>Upload your email file for analysis.</p>
-                <form action="/upload" method="post" enctype="multipart/form-data">
-                    <input type="file" name="file">
-                    <input type="submit" value="Upload">
-                </form>
-            </div>
-            <div id="attachmentScanner" class="tab-pane fade"> 
-                <!-- Content for Attachment Scanner tab -->
-                <p>Upload your attachment file for scanning.</p>
-                <form action="/attachment-upload" method="post" enctype="multipart/form-data">
-                    <input type="file" name="attachment"> <!-- Changed the name attribute to 'attachment' -->
-                    <input type="submit" value="Scan Attachment">
-                </form>
-            </div>            
-            <div id="urlScanner" class="tab-pane fade">
-                <!-- Content for URL Scanner tab -->
-                <p>Detect if a URL has a phishing link or is malicious.</p>
-                <form action="/url" method="post">
-                    <input type="text" name="url">
-                    <input type="submit" value="Check URL">
-                </form>
-            
-            </div>
-            <div id="About" class="tab-pane fade">
-                <!-- Content for About  tab -->
-                <p>What is PhishScope?</p>
-                <p>PhishScope is a tool that allows you to scan emails, URLs, and typosquatting domains for phishing links and malicious content.</p>
-
-                <p>How does it work?</p>
-                <p>PhishScope uses machine learning to analyze emails and URLs for phishing links and malicious content. It also monitors typosquatting domains to detect potential phishing attacks.</p>
-            </div>
-        </div>
     </div>
+    <!-- End of Email Upload -->
+
+    <!-- Content for Attachment Scanner tab -->
+    <p>Upload your attachment file for scanning.</p>
+    <form action="/attachment-upload" method="post" enctype="multipart/form-data">
+        <input type="file" name="attachment"> <!-- Changed the name attribute to 'attachment' -->
+        <input type="submit" value="Scan Attachment">
+    </form>
+
+    <!-- Content for URL Scanner tab -->
+    <p>Detect if a URL has a phishing link or is malicious.</p>
+    <form action="/url" method="post">
+        <input type="text" name="url">
+        <input type="submit" value="Check URL">
+    </form>
+
+
+    <!-- Content for About  tab -->
+    <p>What is PhishScope?</p>
+    <p>PhishScope is a tool that allows you to scan emails, URLs, and typosquatting domains for phishing links and malicious content.</p>
+
+    <p>How does it work?</p>
+    <p>PhishScope uses machine learning to analyze emails and URLs for phishing links and malicious content. It also monitors typosquatting domains to detect potential phishing attacks.</p>
 
     {% if show_results %}
     <div class="text-center mt-4">
@@ -97,14 +89,8 @@
     <!-- Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script>
-    $(function () {
-      $('.nav-link').on('click', function (e) {
-        e.preventDefault()
-        $(this).tab('show')
-      })
-    })
-    </script>
+    <!-- Custom JS -->
+    <script src="{{ url_for('static', filename='script.js', v=current_time) }}"></script>
+    
 </body>
 </html>
-```
