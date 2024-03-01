@@ -4,7 +4,7 @@ import os
 import time
 from time import sleep
 # from model for distilBERT, from model2 for BERT
-from model2 import check_phishing
+from my_model import check_phishing
 from config import VIRUSTOTAL_API_KEY
 
 
