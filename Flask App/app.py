@@ -4,8 +4,7 @@ import os
 import time
 from time import sleep
 # from model for distilBERT, from model2 for BERT
-# from model2 import check_phishing
-from test_model import *
+from model2 import check_phishing
 from config import VIRUSTOTAL_API_KEY
 
 
@@ -39,11 +38,10 @@ def upload_file():
             return redirect(request.url)
         if file and allowed_file(file.filename):
             content = file.read().decode('utf-8')  # Assuming the file is text-based
-            #phishing_result = check_phishing(content)
-            phishing_result, confidence_score = predict(content)
+            phishing_result = check_phishing(content)
             # Handle phishing_result as needed, e.g., flash a message to the user
             flash('File successfully uploaded. ')
-            flash(str(class_names[phishing_result] + " " + str(confidence_score)))
+            flash(str(phishing_result))
             return redirect(url_for('index'))
     return redirect(url_for('index'))
 
