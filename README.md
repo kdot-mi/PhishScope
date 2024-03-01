@@ -6,8 +6,10 @@
 ## About
 
 ### Data Set
-https://www.kaggle.com/datasets/subhajournal/phishingemails/code   ### This one might also have spam emails
-https://monkey.org/~jose/phishing/
+https://huggingface.co/datasets/ealvaradob/phishing-dataset  (Mail Dataset)
+
+### Model HuggingFace Repos
+https://huggingface.co/rpg1/tinyBERT_phishing_model
 
 install transformers (<a href="https://www.tenforums.com/tutorials/51704-enable-disable-win32-long-paths-windows-10-a.html">Win32 Long Paths Enabled</a>)
 <br>
