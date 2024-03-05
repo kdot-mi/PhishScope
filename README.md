@@ -15,7 +15,7 @@ install transformers (<a href="https://www.tenforums.com/tutorials/51704-enable-
 <br>
 <code>pip install transformers</code>
 
-intall database libraries
+install database libraries
 <br>
 <code>pip install Flask-SQLAlchemy</code>
 <br>
