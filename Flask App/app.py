@@ -3,7 +3,6 @@ import requests
 import os
 import time
 from time import sleep
-# from model for distilBERT, from model2 for BERT
 from my_model import check_phishing
 from config import VIRUSTOTAL_API_KEY
 
