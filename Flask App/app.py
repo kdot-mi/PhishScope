@@ -56,7 +56,7 @@ def upload_file():
         if file.filename == '' or not allowed_file(file.filename):
             flash('No selected file or file type not allowed')
             return redirect(request.url)
-        
+
         flash('Upload Successful')
 
         # Decode the file content
@@ -65,23 +65,32 @@ def upload_file():
         # Call the check_phishing function
         phishing_results = check_phishing(content)
 
-        # Determine if phishing was detected and extract any email address from the content
-        if phishing_results and phishing_results[0]['label'] == 'phishing':
-            phishing_detected = True
-            phishing_score = phishing_results[0]['score']
-            email_address = extract_email_address(content)
+        # Initialize variables
+        email_address = None  # Initialize email_address with a default value
 
-            # Feedback for phishing detected
-            if email_address:
-                blacklist_email(email_address)
-                flash('Phishing detected. Sender added to blacklist.')
+        if phishing_results:
+            label = phishing_results[0]['label']
+            score = phishing_results[0]['score']
+            
+            if label == 'phishing':
+                phishing_detected = True
+                email_address = extract_email_address(content)
+                
+                if email_address:
+                    blacklist_email(email_address)
+                    flash('Phishing detected. Sender added to blacklist.')
+                else:
+                    flash('Phishing detected, but no email address found.')
+                
+                flash(f"Phishing score: {score}")
             else:
-                flash('Phishing detected, but no email address found.')
+                phishing_detected = False
+                # Flash message for benign or other non-phishing labels
+                flash(f"{label.capitalize()} score: {score}")
+                flash('Content deemed safe.')
 
-            flash(f"Phishing score: {phishing_score}")
         else:
-            phishing_detected = False
-            flash('Content deemed safe.')
+            flash('No results from phishing check.')
 
         
         
