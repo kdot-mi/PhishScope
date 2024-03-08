@@ -3,13 +3,36 @@ import requests
 import os
 import time
 from time import sleep
-# from model for distilBERT, from model2 for BERT
-from model2 import check_phishing
+from my_model import check_phishing
 from config import VIRUSTOTAL_API_KEY
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
+from datetime import datetime
+from zoneinfo import ZoneInfo
+import re
 
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'  # Needed for flash messages and sessions
+
+# Database configuration
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///phishScope.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy(app)
+
+class Blacklist(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(255), unique=True, nullable=False)
+
+class EmailAnalytics(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(255), nullable=False)
+    status = db.Column(db.String(50), nullable=False)  # 'safe' or 'unsafe'
+    date_analyzed = db.Column(db.DateTime, default=lambda: datetime.now(ZoneInfo("America/New_York")))
+    score = db.Column(db.Float, nullable=True)  # Add this line
+
+with app.app_context():
+    db.create_all()
 
 # Define the allowed extensions for upload
 ALLOWED_EXTENSIONS = {'eml', 'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
@@ -26,24 +49,76 @@ def index():
 @app.route('/upload', methods=['POST'])
 def upload_file():
     if request.method == 'POST':
-        # Check if the post request has the file part
         if 'file' not in request.files:
             flash('No file part')
             return redirect(request.url)
         file = request.files['file']
-        # If user does not select file, browser also
-        # submit an empty part without filename
-        if file.filename == '':
-            flash('No selected file')
+        if file.filename == '' or not allowed_file(file.filename):
+            flash('No selected file or file type not allowed')
             return redirect(request.url)
-        if file and allowed_file(file.filename):
-            content = file.read().decode('utf-8')  # Assuming the file is text-based
-            phishing_result = check_phishing(content)
-            # Handle phishing_result as needed, e.g., flash a message to the user
-            flash('File successfully uploaded. ')
-            flash(str(phishing_result))
-            return redirect(url_for('index'))
+
+        flash('Upload Successful')
+
+        # Decode the file content
+        content = file.read().decode('utf-8')  # Assuming the file is text-based
+
+        # Call the check_phishing function
+        phishing_results = check_phishing(content)
+
+        # Initialize variables
+        email_address = None  # Initialize email_address with a default value
+
+        if phishing_results:
+            label = phishing_results[0]['label']
+            score = phishing_results[0]['score']
+            
+            if label == 'phishing':
+                phishing_detected = True
+                email_address = extract_email_address(content)
+                
+                if email_address:
+                    blacklist_email(email_address)
+                    flash('Phishing detected. Sender added to blacklist.')
+                else:
+                    flash('Phishing detected, but no email address found.')
+                
+                flash(f"Phishing score: {score}")
+            else:
+                phishing_detected = False
+                # Flash message for benign or other non-phishing labels
+                flash(f"{label.capitalize()} score: {score}")
+                flash('Content deemed safe.')
+
+        else:
+            flash('No results from phishing check.')
+
+        
+        
+
+        # Log the phishing check result
+        status = 'unsafe' if phishing_detected else 'safe'
+        new_analytics = EmailAnalytics(email=email_address or 'unknown', status=status, score=phishing_results[0]['score'] if phishing_detected else 0)
+        db.session.add(new_analytics)
+        db.session.commit()
+
+        return redirect(url_for('index'))
+    
     return redirect(url_for('index'))
+
+
+
+def extract_email_address(content):
+    # A simple regex for extracting an email address
+    match = re.search(r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b', content)
+    return match.group(0) if match else None
+
+def blacklist_email(email_address):
+    # Check if the email address is already in the blacklist to prevent duplicates
+    if not Blacklist.query.filter_by(email=email_address).first():
+        new_blacklist_entry = Blacklist(email=email_address)
+        db.session.add(new_blacklist_entry)
+        db.session.commit()
+
 
 @app.route('/attachment-upload', methods=['POST'])
 def attachment_upload():
