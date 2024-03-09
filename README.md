@@ -1,5 +1,5 @@
 <div align="center">
-![logo](images\Logo Design-13.png)
+![logo](https://github.com/kdot-mi/Phishing-Detection-App/blob/main/images/Logo%20Design-13.png)
 </div>
 
 ## About
