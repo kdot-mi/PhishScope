@@ -28,14 +28,27 @@ Make sure you are in the *Phishing-Detection-App\Flask App* directory
 <br>
 <code>$ python app.py</code>
 
+### Usage
+<div align="center"><img src="images\webUI.png">
+<i>Prototype UI</i>
+</div><br>
+
+
+
 ## Resources
 ### Data Set
-Mail Dataset.
+E-mail Dataset.
 
 https://huggingface.co/datasets/ealvaradob/phishing-dataset  
 
 ### Hugging Face Model
-<a href="https://huggingface.co/docs/transformers/model_doc/bert">Bidirectional Encoder Representations from Transformers</a> (**BERT**) model. A deep learning model which is trained on text data, and learns to understand the context of words.
+<div align="center">
+    <img src="images\BERT.png">
+    <i>A schematic depiction of the BERT model and its training process</i>
+</div>
+<br>
+<a href="https://huggingface.co/docs/transformers/model_doc/bert">Bidirectional Encoder Representations from Transformers</a> (<b>BERT</b>) model. A deep learning model which is trained on text data, and learns to understand the context of words.<br>
+<br>
 
 https://huggingface.co/rpg1/tinyBERT_phishing_model
 
@@ -45,4 +58,5 @@ A free course that helps coders apply deep learning to practical problems. Cover
 https://course.fast.ai/
 
 
-
+## Credits
+This project started in 2024 and was presented as a Senior Project for graduation at the <a href="https://www.usf.edu/">University of South Florida</a>. The team was composed by <a href="https://github.com/kdot-mi">Thurmond Guy</a>, <a href="https://github.com/YameronB">Cameron Brauner</a>, <a href="https://github.com/rpg94">Ryan Gillespie</a>, and Dylan Love.
