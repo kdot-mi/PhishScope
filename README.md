@@ -1,9 +1,9 @@
 <div align="center">
-![logo](https://github.com/kdot-mi/Phishing-Detection-App/blob/main/images/Logo%20Design-13.png)
+<img src="images\Logo Design-13.png">
 </div>
 
 ## About
-***PhishScope*** is a phishing email analysis tool that allows you to scan emails, URLs, and typosquatting domains for phishing links and malicious content.  It is writtin in *Python 3* and based on *Flask*. It uses the <a href="https://docs.virustotal.com/reference/overview">*VirusTotal*</a> API and the **BERT** model to detect phishing emails. 
+***PhishScope*** is a phishing email analysis tool that allows you to scan emails, URLs, and typosquatting domains for phishing links and malicious content.  It is written in *Python 3* and based on *Flask*. It uses the <a href="https://docs.virustotal.com/reference/overview">*VirusTotal*</a> API and the **BERT** model to detect phishing emails. 
 
 ## Getting Started
 ### Running Application Locally
@@ -39,9 +39,8 @@ https://huggingface.co/datasets/ealvaradob/phishing-dataset
 
 https://huggingface.co/rpg1/tinyBERT_phishing_model
 
-
 ### Practical Deep Learning
-Free course that helps coders apply deep learning to practical problems. Covers building and training models for various applications using tools like PyTorch, fastai, and Hugging Face.
+A free course that helps coders apply deep learning to practical problems. Covers building and training models for various applications using tools like PyTorch, fast.ai, and Hugging Face.
 
 https://course.fast.ai/
 
