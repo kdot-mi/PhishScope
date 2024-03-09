@@ -47,5 +47,3 @@ https://course.fast.ai/
 
 
 
-
-
