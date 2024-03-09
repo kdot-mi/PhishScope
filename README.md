@@ -3,7 +3,7 @@
 </div>
 
 ## About
-***PhishScope*** is a phishing email analysis tool that allows you to scan emails, URLs, and typosquatting domains for phishing links and malicious content.  It is written in *Python 3* and based on *Flask*. It uses the <a href="https://docs.virustotal.com/reference/overview">*VirusTotal*</a> API and the **BERT** model to detect phishing emails. 
+***PhishScope*** is a web application phishing email analysis tool that allows you to scan emails, URLs, and typosquatting domains for phishing links and malicious content.  It is written in *Python 3* and based on *Flask*. It uses the <a href="https://docs.virustotal.com/reference/overview">*VirusTotal*</a> API and the **BERT** model to detect phishing emails. 
 
 ## Getting Started
 ### Running Application Locally
@@ -26,7 +26,9 @@ Install database libraries
 <br>
 Make sure you are in the *Phishing-Detection-App\Flask App* directory
 <br>
-<code>$ python app.py</code>
+<code>$ python3 app.py</code>
+
+The default Flask WSGI server (<a href="https://werkzeug.palletsprojects.com/en/3.0.x/">Werkzeug</a>) will be used. If you wish to use another WSGI server (e.g. <a href="https://gunicorn.org/">Gunicorn</a>) or use a reverse proxy (e.g. <a href="https://nginx.org/en/">NGINX</a>), read the <a href="https://flask-socketio.readthedocs.io/en/latest/deployment.html">Flask-SocketIO documentation</a>.
 
 ### Usage
 <div align="center"><img src="images\webUI.png">
@@ -37,7 +39,7 @@ Make sure you are in the *Phishing-Detection-App\Flask App* directory
 
 ## Resources
 ### Data Set
-E-mail Dataset.
+A collection of datasets for classification and phishing detection tasks, compiled from various sources, including 18,000 Enron Corporation emails, 5,971 text messages, over 800,000 URLs, and 80,000 website instances.
 
 https://huggingface.co/datasets/ealvaradob/phishing-dataset  
 
@@ -46,6 +48,7 @@ https://huggingface.co/datasets/ealvaradob/phishing-dataset
     <img src="images\BERT.png">
     <i>A schematic depiction of the BERT model and its training process</i>
 </div>
+
 <br>
 <a href="https://huggingface.co/docs/transformers/model_doc/bert">Bidirectional Encoder Representations from Transformers</a> (<b>BERT</b>) model. A deep learning model which is trained on text data, and learns to understand the context of words.<br>
 <br>
