@@ -28,7 +28,7 @@ body{
 }
 
 .container img{
-    width: 75%;
+    width:750px;
     height: auto;
 }
 
@@ -71,10 +71,15 @@ form p{
     font-size: 16px;
 }
 
-input[type="submit"][value="Upload"] {
+button[type="submit"] {
     width: 100%;
     padding: 10px;
     border-radius: 5px;
     border: 1px solid #ccc;
+}
+
+button[type="submit"]:hover {
+    background: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);
+    color: #fff;
 }
 
