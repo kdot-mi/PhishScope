@@ -5,9 +5,15 @@
 ## About
 ***PhishScope*** is a web application phishing email analysis tool that allows you to scan emails, URLs, and typosquatting domains for phishing links and malicious content.  It is written in <a href="https://www.python.org/downloads/">*Python 3*</a> and based on <a href="https://flask.palletsprojects.com/en/3.0.x/">*Flask*</a>. It uses the *VirusTotal* API and the **BERT** model to detect phishing emails. 
 
+<div align="center">
+<img src="images\buildingBlocks.png"><br>
+
+*PhishScope UML Diagram*
+</div>
+
 ## Getting Started
 ### VirusTotal API
-PhishScope uses the *VirusTotal* API for uploading and scanning files. This allows *PhishScope* to check if a file is malicious or benign based on *VirusTotal*'s database. Additionally, it allows *PhishScope* to submit and scan URLs to determie if they lead to harmful content.
+*PhishScope* uses the *VirusTotal* API for uploading and scanning files. This allows *PhishScope* to check if a file is malicious or benign based on *VirusTotal*'s database. Additionally, it allows *PhishScope* to submit and scan URLs to determine if they lead to harmful content.
 
 The API retrieves finished scan reports for files and URLs.
 
@@ -63,9 +69,21 @@ The default Flask WSGI server (<a href="https://werkzeug.palletsprojects.com/en/
 <i>Prototype UI</i>
 </div><br>
 
-**Proto Demo:**
+The interface has an input area to enter a file and an upload button to submit to the *VirusTotal* API. 
 
+**Proto Demo:**<br>
+<div align="center">
+<img src="images\EmailScanner.gif" align="center">
+<i>Email  Scanner</i>
+</div><br>
+The user will input a file and click upload. That file will get sent to the *VirusTotal* API and return results labeling the file malicious or benign. It will also give a malicious score from 0% to 100%.
 
+<br>
+<div align="center">
+<img src="images\AttachmentScanner.gif">
+<i>Attachment Scanner</i>
+</div><br>
+The user will input a file and click upload. That file will get sent to the *VirusTotal* API and return 'Scan Results'. 
 
 ## Resources
 ### Data Set
@@ -80,7 +98,7 @@ https://huggingface.co/datasets/ealvaradob/phishing-dataset
 </div>
 
 <br>
-<a href="https://huggingface.co/docs/transformers/model_doc/bert">Bidirectional Encoder Representations from Transformers</a> (<b>BERT</b>) model. A deep learning model which is trained on text data, and learns to understand the context of words.<br>
+<a href="https://huggingface.co/docs/transformers/model_doc/bert">Bidirectional Encoder Representations from Transformers</a> (<b>BERT</b>) model. A deep learning model which is trained on text data. Unlike traditional models that process text in one direction (either left-to-right or right-to-left), BERT considers both directions which helps it learn to understand the context of words.<br>
 <br>
 
 https://huggingface.co/rpg1/tinyBERT_phishing_model
@@ -93,3 +111,7 @@ https://course.fast.ai/
 
 ## Credits
 This project started in 2024 and was presented as a Senior Project for graduation at the <a href="https://www.usf.edu/">University of South Florida</a>. The team was composed by <a href="https://github.com/kdot-mi">Thurmond Guy</a>, <a href="https://github.com/YameronB">Cameron Brauner</a>, <a href="https://github.com/rpg94">Ryan Gillespie</a>, and <a href="https://github.com/RealDylanLove">Dylan Love</a>.
+
+<div align="center">
+<img src="images\University-of-South-Florida-Logo.png" width="300px">
+</div>
