@@ -3,11 +3,39 @@
 </div>
 
 ## About
-***PhishScope*** is a web application phishing email analysis tool that allows you to scan emails, URLs, and typosquatting domains for phishing links and malicious content.  It is written in *Python 3* and based on *Flask*. It uses the <a href="https://docs.virustotal.com/reference/overview">*VirusTotal*</a> API and the **BERT** model to detect phishing emails. 
+***PhishScope*** is a web application phishing email analysis tool that allows you to scan emails, URLs, and typosquatting domains for phishing links and malicious content.  It is written in <a href="https://www.python.org/downloads/">*Python 3*</a> and based on <a href="https://flask.palletsprojects.com/en/3.0.x/">*Flask*</a>. It uses the *VirusTotal* API and the **BERT** model to detect phishing emails. 
 
 ## Getting Started
+### VirusTotal API
+PhishScope uses the *VirusTotal* API for uploading and scanning files. This allows *PhishScope* to check if a file is malicious or benign based on *VirusTotal*'s database. Additionally, it allows *PhishScope* to submit and scan URLs to determie if they lead to harmful content.
+
+The API retrieves finished scan reports for files and URLs.
+
+To use the API, create a **config.py** file with the API key.
+
+**config.py**<br>
+<code>VIRUSTOTAL_API_KEY = 'API KEY'</code>
+
+Replace 'API KEY' with the <a href="https://docs.virustotal.com/reference/overview">*VirusTotal* API Key</a>.
+
+Place the **config.py** file inside the  *Phishing-Detection-App\Flask App* directory. This is the file tree:
+
+```
+Flask App/
+├─ __pycache__/
+├─ instance/
+├─ static/
+├─ templates/
+├─ venv/
+├─ app.py
+├─ **config.py**
+├─ my_model.py
+```
+
 ### Running Application Locally
-PhishScope can run on any operating system that can install Python (Windows, Mac OS, and most Linux distributions). We recommend setting up a virtual environment and activating it (<a href="https://docs.python.org/3/tutorial/venv.html">Python 3 Virtual Environment Tutorial</a>).
+*PhishScope* can run on any operating system that can install Python (Windows, Mac OS, and most Linux distributions). We recommend setting up a virtual environment and activating it (<a href="https://docs.python.org/3/tutorial/venv.html">Python 3 Virtual Environment Tutorial</a>).
+
+Flask supports Python 3.8 and newer.
 
 **Install project dependencies:**
 <br>
@@ -34,6 +62,8 @@ The default Flask WSGI server (<a href="https://werkzeug.palletsprojects.com/en/
 <div align="center"><img src="images\webUI.png">
 <i>Prototype UI</i>
 </div><br>
+
+**Proto Demo:**
 
 
 
@@ -62,4 +92,4 @@ https://course.fast.ai/
 
 
 ## Credits
-This project started in 2024 and was presented as a Senior Project for graduation at the <a href="https://www.usf.edu/">University of South Florida</a>. The team was composed by <a href="https://github.com/kdot-mi">Thurmond Guy</a>, <a href="https://github.com/YameronB">Cameron Brauner</a>, <a href="https://github.com/rpg94">Ryan Gillespie</a>, and Dylan Love.
+This project started in 2024 and was presented as a Senior Project for graduation at the <a href="https://www.usf.edu/">University of South Florida</a>. The team was composed by <a href="https://github.com/kdot-mi">Thurmond Guy</a>, <a href="https://github.com/YameronB">Cameron Brauner</a>, <a href="https://github.com/rpg94">Ryan Gillespie</a>, and <a href="https://github.com/RealDylanLove">Dylan Love</a>.
