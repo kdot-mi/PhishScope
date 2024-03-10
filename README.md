@@ -83,6 +83,7 @@ The user will input a file and click upload. That file will get sent to the *Vir
 <img src="images\AttachmentScanner.gif">
 <i>Attachment Scanner</i>
 </div><br>
+
 The user will input a file and click upload. That file will get sent to the *VirusTotal* API and return 'Scan Results'. 
 
 ## Resources
@@ -93,7 +94,7 @@ https://huggingface.co/datasets/ealvaradob/phishing-dataset
 
 ### Hugging Face Model
 <div align="center">
-    <img src="images\BERT.png">
+    <img src="images\BERT.png"><br>
     <i>A schematic depiction of the BERT model and its training process</i>
 </div>
 
