@@ -76,6 +76,7 @@ The interface has an input area to enter a file and an upload button to submit t
 <img src="images\EmailScanner.gif" align="center">
 <i>Email  Scanner</i>
 </div><br>
+
 The user will input a file and click upload. That file will get sent to the *VirusTotal* API and return results labeling the file malicious or benign. It will also give a malicious score from 0% to 100%.
 
 <br>
