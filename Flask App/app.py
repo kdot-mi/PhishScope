@@ -10,6 +10,15 @@ from flask_migrate import Migrate
 from datetime import datetime
 from zoneinfo import ZoneInfo
 import re
+import plotly
+import plotly.graph_objs as go
+from collections import defaultdict
+import openai
+import magic
+from email import message_from_bytes, policy
+from email.parser import BytesParser
+import pdfplumber
+import docx
 
 
 app = Flask(__name__)
@@ -35,7 +44,7 @@ with app.app_context():
     db.create_all()
 
 # Define the allowed extensions for upload
-ALLOWED_EXTENSIONS = {'eml', 'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
+ALLOWED_EXTENSIONS = {'eml', 'txt', 'pdf', 'docx'}
 
 def allowed_file(filename):
     return '.' in filename and \
@@ -59,41 +68,68 @@ def upload_file():
 
         flash('Upload Successful')
 
-        # Decode the file content
-        content = file.read().decode('utf-8')  # Assuming the file is text-based
+        # Get the file type
+        file_type = magic.from_buffer(file.read(), mime=True)
+
+        # Reset the file stream
+        file.seek(0)
+
+        if file_type == 'text/plain':
+            # Handle plain text files
+            content = file.read().decode('utf-8')
+            email_address = extract_email_address(content)
+            mail_body = content
+        elif file_type == 'message/rfc822':
+            # Handle email files (e.g., .eml)
+            email_message = message_from_bytes(file.read(), policy=policy.default)
+            email_address = email_message['From']
+            mail_body = get_body(email_message)
+        elif file_type == 'application/pdf':
+            # Handle PDF files
+            with pdfplumber.open(file) as pdf:
+                mail_body = ''
+                for page in pdf.pages:
+                    mail_body += page.extract_text()
+            email_address = extract_email_address(mail_body)
+        elif file_type == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
+            # Handle DOCX files
+            doc = docx.Document(file)
+            mail_body = ''
+            for para in doc.paragraphs:
+                mail_body += para.text + '\n'
+            email_address = extract_email_address(mail_body)
+        else:
+            # Handle other file types (e.g., .jpg, .png, etc.)
+            flash(f'File type {file_type} is not supported')
+            return redirect(request.url)
 
         # Call the check_phishing function
-        phishing_results = check_phishing(content)
+        phishing_results = check_phishing(mail_body)
 
         # Initialize variables
-        email_address = None  # Initialize email_address with a default value
+        phishing_detected = False
 
         if phishing_results:
             label = phishing_results[0]['label']
             score = phishing_results[0]['score']
-            
+
             if label == 'phishing':
                 phishing_detected = True
-                email_address = extract_email_address(content)
-                
+
                 if email_address:
                     blacklist_email(email_address)
                     flash('Phishing detected. Sender added to blacklist.')
                 else:
                     flash('Phishing detected, but no email address found.')
-                
+
                 flash(f"Phishing score: {score}")
             else:
-                phishing_detected = False
                 # Flash message for benign or other non-phishing labels
                 flash(f"{label.capitalize()} score: {score}")
                 flash('Content deemed safe.')
 
         else:
             flash('No results from phishing check.')
-
-        
-        
 
         # Log the phishing check result
         status = 'unsafe' if phishing_detected else 'safe'
@@ -102,10 +138,17 @@ def upload_file():
         db.session.commit()
 
         return redirect(url_for('index'))
-    
+
     return redirect(url_for('index'))
 
-
+def get_body(email_message):
+    if email_message.is_multipart():
+        for payload in email_message.get_payload():
+            body = get_body(payload)
+            if body:
+                return body
+    else:
+        return email_message.get_payload(decode=True).decode('utf-8')
 
 def extract_email_address(content):
     # A simple regex for extracting an email address
@@ -185,6 +228,82 @@ def upload_url():
         flash('URL successfully uploaded')
         return redirect(url_for('index'))
     return redirect(url_for('index'))
+
+@app.route('/analytics')
+def analytics():
+    # Query the EmailAnalytics table to get the data
+    email_analytics = EmailAnalytics.query.all()
+
+    # Count the number of safe and unsafe emails
+    safe_count = sum(1 for email in email_analytics if email.status == 'safe')
+    unsafe_count = sum(1 for email in email_analytics if email.status == 'unsafe')
+
+    # Create the pie chart data
+    labels = ['Safe', 'Unsafe']
+    values = [safe_count, unsafe_count]
+
+    # Create the pie chart
+    pie_chart = go.Figure(data=[go.Pie(labels=labels, values=values)])
+    pie_div = plotly.offline.plot(pie_chart, output_type='div', include_plotlyjs=False)
+
+    # Get the data grouped by date and status
+    email_data = defaultdict(lambda: {'safe': 0, 'unsafe': 0})
+    for email in email_analytics:
+        date = email.date_analyzed.date()
+        status = email.status
+        email_data[date][status] += 1
+
+    # Create the line chart data
+    dates = sorted(email_data.keys())
+    safe_counts = [email_data[date]['safe'] for date in dates]
+    unsafe_counts = [email_data[date]['unsafe'] for date in dates]
+
+    # Create the line chart
+    line_chart = go.Figure()
+    line_chart.add_trace(go.Scatter(x=dates, y=safe_counts, mode='lines', name='Safe'))
+    line_chart.add_trace(go.Scatter(x=dates, y=unsafe_counts, mode='lines', name='Unsafe'))
+    line_chart.update_layout(title='Email Analysis Trend', xaxis_title='Date', yaxis_title='Count')
+
+    # Convert the plotly figure to HTML
+    line_div = plotly.offline.plot(line_chart, output_type='div', include_plotlyjs=False)
+
+    # Group the email data by score range and status
+    score_ranges = [(0, 0.2), (0.2, 0.4), (0.4, 0.6), (0.6, 0.8), (0.8, 1)]
+    email_data = {(start, end): {'safe': 0, 'unsafe': 0} for start, end in score_ranges}
+    for email in email_analytics:
+        score = email.score
+        status = email.status
+        for start, end in score_ranges:
+            if start <= score < end:
+                email_data[(start, end)][status] += 1
+
+    # Create the bar chart data
+    x_labels = [f"{start:.1f} - {end:.1f}" for start, end in score_ranges]
+    safe_counts = [email_data[(start, end)]['safe'] for start, end in score_ranges]
+    unsafe_counts = [email_data[(start, end)]['unsafe'] for start, end in score_ranges]
+
+    # Create the bar chart
+    bar_chart = go.Figure(data=[
+        go.Bar(x=x_labels, y=safe_counts, name='Safe'),
+        go.Bar(x=x_labels, y=unsafe_counts, name='Unsafe')
+    ])
+    bar_chart.update_layout(title='Email Status Distribution by Score Range', xaxis_title='Score Range', yaxis_title='Count', barmode='group')
+
+    # Convert the plotly figure to HTML
+    bar_div = plotly.offline.plot(bar_chart, output_type='div', include_plotlyjs=False)
+
+    # Get the data for score and analysis date
+    scores = [email.score for email in email_analytics]
+    dates = [email.date_analyzed for email in email_analytics]
+
+    # Create the scatter plot
+    scatter_plot = go.Figure(data=go.Scatter(x=dates, y=scores, mode='markers'))
+    scatter_plot.update_layout(title='Email Score vs. Analysis Date', xaxis_title='Analysis Date', yaxis_title='Score')
+
+    # Convert the plotly figure to HTML
+    scatter_div = plotly.offline.plot(scatter_plot, output_type='div', include_plotlyjs=False)
+
+    return render_template('analytics.html', pie_div=pie_div, line_div=line_div, bar_div=bar_div, scatter_div=scatter_div)
 
 if __name__ == '__main__':
     app.run(debug=True, port=9001)
