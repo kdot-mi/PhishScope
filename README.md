@@ -43,11 +43,14 @@ Flask App/
 
 Flask supports Python 3.8 and newer.
 
-**Install project dependencies:**
+**Project Dependencies:**
 <br>
 Install transformers [Need for **BERT** model] (*Required:* <a href="https://www.tenforums.com/tutorials/51704-enable-disable-win32-long-paths-windows-10-a.html">Win32 Long Paths Enabled</a>)
 <br>
 <code>$ pip install transformers</code>
+<br>
+
+Other Dependencies
 <br>
 <code>$ pip install plotly</code>
 <br>
