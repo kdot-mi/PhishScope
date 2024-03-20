@@ -4,7 +4,7 @@ import os
 import time
 from time import sleep
 from my_model import check_phishing
-from config import VIRUSTOTAL_API_KEY
+from config import VIRUSTOTAL_API_KEY, OPENAI_API_KEY
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from datetime import datetime
@@ -15,7 +15,7 @@ import plotly.graph_objs as go
 from collections import defaultdict
 from openai import OpenAI
 
-client = OpenAI(api_key="secret key")
+client = OpenAI(api_key=OPENAI_API_KEY)
 import magic
 from email import message_from_bytes, policy
 from email.parser import BytesParser
