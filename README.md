@@ -21,6 +21,8 @@ To use the API, create a **config.py** file with the API key.
 
 **config.py**<br>
 <code>VIRUSTOTAL_API_KEY = 'API KEY'</code>
+<br>
+<code>OPENAI_API_KEY = 'API KEY'</code>
 
 Replace 'API KEY' with the <a href="https://docs.virustotal.com/reference/overview">*VirusTotal* API Key</a>.
 
@@ -61,6 +63,8 @@ Other Dependencies
 <code>$ pip install pdfplumber</code>
 <br>
 <code>$ pip install python-docx</code>
+<br>
+<code>$ pip install chardet</code>
 
 
 Install database libraries
