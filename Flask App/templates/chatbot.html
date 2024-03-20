@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chatbot</title>
+</head>
+<body>
+    <h1>Chatbot</h1>
+    <form method="post" action="{{ url_for('chatbot') }}">
+        <label for="user_input">Enter your message:</label>
+        <input type="text" id="user_input" name="user_input" required>
+        <input type="submit" value="Send">
+    </form>
+    {% if response %}
+        <p>Chatbot response: {{ response }}</p>
+    {% endif %}
+</body>
+</html>

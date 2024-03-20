@@ -13,12 +13,15 @@ import re
 import plotly
 import plotly.graph_objs as go
 from collections import defaultdict
-import openai
+from openai import OpenAI
+
+client = OpenAI(api_key="secret key")
 import magic
 from email import message_from_bytes, policy
 from email.parser import BytesParser
 import pdfplumber
 import docx
+import chardet
 
 
 app = Flask(__name__)
@@ -84,6 +87,7 @@ def upload_file():
             email_message = message_from_bytes(file.read(), policy=policy.default)
             email_address = email_message['From']
             mail_body = get_body(email_message)
+            print(mail_body)
         elif file_type == 'application/pdf':
             # Handle PDF files
             with pdfplumber.open(file) as pdf:
@@ -148,7 +152,26 @@ def get_body(email_message):
             if body:
                 return body
     else:
-        return email_message.get_payload(decode=True).decode('utf-8')
+        payload = email_message.get_payload(decode=True)
+        if payload:
+            # Try to detect the encoding
+            result = chardet.detect(payload)
+            encoding = result['encoding'] if result['encoding'] else 'utf-8'
+
+            try:
+                # Try decoding the payload using the detected encoding
+                body = payload.decode(encoding, errors='replace')
+                return body
+            except (UnicodeDecodeError, LookupError):
+                # If the decoding fails, try other encodings
+                for encoding in ['windows-1252', 'latin-1']:
+                    try:
+                        body = payload.decode(encoding, errors='replace')
+                        return body
+                    except UnicodeDecodeError:
+                        pass
+
+    return None
 
 def extract_email_address(content):
     # A simple regex for extracting an email address
@@ -304,6 +327,24 @@ def analytics():
     scatter_div = plotly.offline.plot(scatter_plot, output_type='div', include_plotlyjs=False)
 
     return render_template('analytics.html', pie_div=pie_div, line_div=line_div, bar_div=bar_div, scatter_div=scatter_div)
+
+@app.route('/chatbot', methods=['GET', 'POST'])
+def chatbot():
+    if request.method == 'POST':
+        user_input = request.form['user_input']
+        response = generate_response(user_input)
+        return render_template('chatbot.html', response=response)
+    return render_template('chatbot.html')
+
+
+def generate_response(prompt):
+    response = client.chat.completions.create(model="gpt-3.5-turbo",
+    messages=[
+        {"role": "user", "content": prompt}
+    ])
+
+    message = response.choices[0].message.content
+    return message
 
 if __name__ == '__main__':
     app.run(debug=True, port=9001)
