@@ -87,7 +87,6 @@ def upload_file():
             email_message = message_from_bytes(file.read(), policy=policy.default)
             email_address = email_message['From']
             mail_body = get_body(email_message)
-            print(mail_body)
         elif file_type == 'application/pdf':
             # Handle PDF files
             with pdfplumber.open(file) as pdf:
