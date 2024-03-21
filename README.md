@@ -17,7 +17,10 @@
 
 The API retrieves finished scan reports for files and URLs.
 
-To use the API, create a **config.py** file with the API key.
+### OpenAI
+*PhishScope* uses the *OpenAI*'s API key for chatbot functionality. The chatbot can assist users: by (1) Guiding users through the process of scanning email, URLs, and files; (2) Explain Concepts of phishing, how phishing attacks work, and common tactics; and (3) Describing the characteristics of phishing emails and websites, helping users to identify threats.
+
+To use the APIs, create a **config.py** file with the API keys.
 
 **config.py**<br>
 <code>VIRUSTOTAL_API_KEY = 'API KEY'</code>
