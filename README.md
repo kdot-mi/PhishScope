@@ -24,7 +24,7 @@ To use the API, create a **config.py** file with the API key.
 <br>
 <code>OPENAI_API_KEY = 'API KEY'</code>
 
-Replace 'API KEY' with the <a href="https://docs.virustotal.com/reference/overview">*VirusTotal* API Key</a>.
+Replace 'API KEY' with the <a href="https://docs.virustotal.com/reference/overview">*VirusTotal*</a> & <a href="https://help.openai.com/en/articles/4936850-where-do-i-find-my-openai-api-key">*OPENAI*</a> API Keys.
 
 Place the **config.py** file inside the  *Phishing-Detection-App\Flask App* directory. This is the file tree:
 
@@ -67,7 +67,7 @@ Other Dependencies
 <code>$ pip install chardet</code>
 
 
-Install database libraries
+Install Database Libraries
 <br>
 <code>$ pip install Flask-SQLAlchemy</code>
 <br>
