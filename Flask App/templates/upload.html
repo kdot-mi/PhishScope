@@ -57,6 +57,12 @@
     </div>
     <!-- End of Email Upload -->
 
+    <!-- Links for Analytics and Chatbot (needs redesign) -->
+
+    <a href="{{ url_for('analytics') }}">Analytics</a>
+
+    <a href="{{ url_for('chatbot') }}">Chatbot</a>
+
     <!-- Content for Attachment Scanner tab -->
     <p>Upload your attachment file for scanning.</p>
     <form action="/attachment-upload" method="post" enctype="multipart/form-data">

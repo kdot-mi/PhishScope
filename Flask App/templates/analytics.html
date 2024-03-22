@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Email Analytics</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+    <h1>Email Analytics</h1>
+    <h2>Safe vs. Unsafe Emails</h2>
+    <div>{{ pie_div|safe }}</div>
+
+    <h2>Email Analysis Trend</h2>
+    <div>{{ line_div|safe }}</div>
+
+    <h2>Email Status Distribution by Score Range</h2>
+    <div>{{ bar_div|safe }}</div>
+
+    <h2>Email Score vs. Analysis Date</h2>
+    <div>{{ scatter_div|safe }}</div>
+</body>
+</html>

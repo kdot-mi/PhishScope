@@ -17,12 +17,17 @@
 
 The API retrieves finished scan reports for files and URLs.
 
-To use the API, create a **config.py** file with the API key.
+### OpenAI
+*PhishScope* uses the *OpenAI*'s API key for chatbot functionality. The chatbot can assist users: by (1) Guiding users through the process of scanning email, URLs, and files; (2) Explain Concepts of phishing, how phishing attacks work, and common tactics; and (3) Describing the characteristics of phishing emails and websites, helping users to identify threats.
+
+To use the APIs, create a **config.py** file with the API keys.
 
 **config.py**<br>
 <code>VIRUSTOTAL_API_KEY = 'API KEY'</code>
+<br>
+<code>OPENAI_API_KEY = 'API KEY'</code>
 
-Replace 'API KEY' with the <a href="https://docs.virustotal.com/reference/overview">*VirusTotal* API Key</a>.
+Replace 'API KEY' with the <a href="https://docs.virustotal.com/reference/overview">*VirusTotal*</a> & <a href="https://help.openai.com/en/articles/4936850-where-do-i-find-my-openai-api-key">*OPENAI*</a> API Keys.
 
 Place the **config.py** file inside the  *Phishing-Detection-App\Flask App* directory. This is the file tree:
 
@@ -43,14 +48,29 @@ Flask App/
 
 Flask supports Python 3.8 and newer.
 
-**Install project dependencies:**
+**Project Dependencies:**
 <br>
 Install transformers [Need for **BERT** model] (*Required:* <a href="https://www.tenforums.com/tutorials/51704-enable-disable-win32-long-paths-windows-10-a.html">Win32 Long Paths Enabled</a>)
 <br>
 <code>$ pip install transformers</code>
+<br>
+
+Other Dependencies
+<br>
+<code>$ pip install plotly</code>
+<br>
+<code>$ pip install openai</code>
+<br>
+<code>$ pip install python-magic</code>
+<br>
+<code>$ pip install pdfplumber</code>
+<br>
+<code>$ pip install python-docx</code>
+<br>
+<code>$ pip install chardet</code>
 
 
-Install database libraries
+Install Database Libraries
 <br>
 <code>$ pip install Flask-SQLAlchemy</code>
 <br>
