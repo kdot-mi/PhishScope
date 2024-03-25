@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Blacklist Management</title>
+    <script>
+        function toggleBlacklist() {
+            var blacklistList = document.getElementById("blacklist-list");
+            if (blacklistList.style.display === "none") {
+                blacklistList.style.display = "block";
+            } else {
+                blacklistList.style.display = "none";
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Blacklist Management</h1>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="{{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <button onclick="toggleBlacklist()">Toggle Blacklist</button>
+
+    <ul id="blacklist-list" style="display: none;">
+        {% for entry in blacklist_entries %}
+            <li>{{ entry.email }}</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Add Email to Blacklist</h2>
+    <form method="post">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+        <button type="submit" name="add_email">Add</button>
+    </form>
+
+    <h2>Remove Email from Blacklist</h2>
+    <form method="post">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+        <button type="submit" name="remove_email">Remove</button>
+    </form>
+</body>
+</html>

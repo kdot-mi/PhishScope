@@ -345,5 +345,33 @@ def generate_response(prompt):
     message = response.choices[0].message.content
     return message
 
+@app.route('/blacklist', methods=['GET', 'POST'])
+def manage_blacklist():
+    if request.method == 'POST':
+        # Handle adding or removing emails from the blacklist
+        if 'add_email' in request.form:
+            email = request.form['email']
+            if not Blacklist.query.filter_by(email=email).first():
+                new_blacklist_entry = Blacklist(email=email)
+                db.session.add(new_blacklist_entry)
+                db.session.commit()
+                flash(f'Email {email} added to the blacklist.', 'success')
+            else:
+                flash(f'Email {email} is already in the blacklist.', 'warning')
+        elif 'remove_email' in request.form:
+            email = request.form['email']
+            blacklist_entry = Blacklist.query.filter_by(email=email).first()
+            if blacklist_entry:
+                db.session.delete(blacklist_entry)
+                db.session.commit()
+                flash(f'Email {email} removed from the blacklist.', 'success')
+            else:
+                flash(f'Email {email} is not in the blacklist.', 'warning')
+
+    # Retrieve the blacklist entries from the database
+    blacklist_entries = Blacklist.query.all()
+
+    return render_template('blacklist.html', blacklist_entries=blacklist_entries)
+
 if __name__ == '__main__':
     app.run(debug=True, port=9001)
