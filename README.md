@@ -73,8 +73,6 @@ Other Dependencies
 Install Database Libraries
 <br>
 <code>$ pip install Flask-SQLAlchemy</code>
-<br>
-<code>$ pip install Flask-Migrate</code>
 
 **You can now run the development server:**
 <br>
