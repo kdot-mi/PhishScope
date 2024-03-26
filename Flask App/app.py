@@ -18,6 +18,7 @@ client = OpenAI(api_key=OPENAI_API_KEY)
 import magic
 from email import message_from_bytes, policy
 from email.parser import BytesParser
+from email.utils import parseaddr
 import pdfplumber
 import docx
 import chardet
@@ -84,7 +85,7 @@ def upload_file():
         elif file_type == 'message/rfc822':
             # Handle email files (e.g., .eml)
             email_message = message_from_bytes(file.read(), policy=policy.default)
-            email_address = email_message['From']
+            email_address = extract_email_address(email_message['From'])
             mail_body = get_body(email_message)
         elif file_type == 'application/pdf':
             # Handle PDF files
@@ -172,7 +173,12 @@ def get_body(email_message):
     return None
 
 def extract_email_address(content):
-    # A simple regex for extracting an email address
+    # First, try to parse the content as an email address using the standard library
+    parsed_email = parseaddr(content)[1]
+    if parsed_email:
+        return parsed_email
+
+    # If parsing fails, try the regular expression approach
     match = re.search(r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b', content)
     return match.group(0) if match else None
 
