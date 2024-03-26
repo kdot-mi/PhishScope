@@ -6,7 +6,6 @@ from time import sleep
 from my_model import check_phishing
 from config import VIRUSTOTAL_API_KEY, OPENAI_API_KEY
 from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
 from datetime import datetime
 from zoneinfo import ZoneInfo
 import re
