@@ -1,37 +1,35 @@
 accelerate==0.28.0
-annotated-types @ file:///croot/annotated-types_1709542908624/work
-anyio @ file:///croot/anyio_1706220167567/work
-Bottleneck @ file:///croot/bottleneck_1707864210935/work
-Brotli @ file:///tmp/abs_ecyw11_7ze/croots/recipe/brotli-split_1659616059936/work
-certifi @ file:///croot/certifi_1707229174982/work/certifi
+annotated-types==0.6.0
+anyio==4.3.0
+blinker==1.7.0
+certifi==2024.2.2
 cffi==1.16.0
 chardet==5.2.0
-charset-normalizer @ file:///tmp/build/80754af9/charset-normalizer_1630003229654/work
-click @ file:///croot/click_1698129812380/work
+charset-normalizer==3.3.2
+click==8.1.7
 cryptography==42.0.5
-distro @ file:///croot/distro_1701455004953/work
-exceptiongroup @ file:///croot/exceptiongroup_1706031385326/work
+distro==1.9.0
+exceptiongroup==1.2.0
 filelock==3.13.3
-Flask @ file:///croot/flask_1702980023242/work
+Flask==3.0.2
 Flask-SQLAlchemy==3.1.1
 fsspec==2024.3.1
 greenlet==3.0.3
-h11 @ file:///croot/h11_1706652277403/work
-httpcore @ file:///croot/httpcore_1706728464539/work
-httpx @ file:///croot/httpx_1706887096329/work
+h11==0.14.0
+httpcore==1.0.4
+httpx==0.27.0
 huggingface-hub==0.22.1
-idna @ file:///croot/idna_1666125576474/work
-itsdangerous @ file:///tmp/build/80754af9/itsdangerous_1621432558163/work
-Jinja2 @ file:///croot/jinja2_1706733616596/work
+idna==3.6
+intel-openmp==2024.1.0
+itsdangerous==2.1.2
+Jinja2==3.1.3
 lxml==5.1.0
-MarkupSafe @ file:///croot/markupsafe_1704205993651/work
-mkl-fft @ file:///croot/mkl_fft_1695058164594/work
-mkl-random @ file:///croot/mkl_random_1695059800811/work
+MarkupSafe==2.1.5
+mkl==2024.1.0
 mkl-service==2.4.0
 mpmath==1.3.0
 networkx==3.2.1
-numexpr @ file:///croot/numexpr_1696515281613/work
-numpy @ file:///croot/numpy_and_numpy_base_1708638617955/work/dist/numpy-1.26.4-cp310-cp310-linux_x86_64.whl#sha256=d8cd837ed43e87f77e6efaa08e8de927ca030a1c9c5d04624432d6fb9a74a5ee
+numpy==1.26.4
 nvidia-cublas-cu12==12.1.3.1
 nvidia-cuda-cupti-cu12==12.1.105
 nvidia-cuda-nvrtc-cu12==12.1.105
@@ -44,40 +42,34 @@ nvidia-cusparse-cu12==12.1.0.106
 nvidia-nccl-cu12==2.19.3
 nvidia-nvjitlink-cu12==12.4.99
 nvidia-nvtx-cu12==12.1.105
-openai @ file:///croot/openai_1706892401053/work
-packaging @ file:///croot/packaging_1710807400464/work
-pandas @ file:///croot/pandas_1709590491089/work/dist/pandas-2.2.1-cp310-cp310-linux_x86_64.whl#sha256=af0f237a7f090add6f15eb4b5d0fd2d9d8ded4cfe6979b18563580353c113c9f
-pandas-stubs @ file:///croot/pandas-stubs_1705008081310/work
+openai==1.14.3
+packaging==24.0
 pdfminer.six==20231228
 pdfplumber==0.11.0
 pillow==10.2.0
-plotly @ file:///croot/plotly_1708976889207/work
+plotly==5.20.0
 psutil==5.9.8
 pycparser==2.21
-pydantic @ file:///croot/pydantic_1709577974639/work
-pydantic_core @ file:///croot/pydantic-core_1709573961665/work
+pydantic==2.6.4
+pydantic_core==2.16.3
 pypdfium2==4.28.0
-PySocks @ file:///home/builder/ci_310/pysocks_1640793678128/work
-python-dateutil @ file:///tmp/build/80754af9/python-dateutil_1626374649649/work
 python-docx==1.1.0
 python-magic==0.4.27
-pytz @ file:///croot/pytz_1695131579487/work
 PyYAML==6.0.1
 regex==2023.12.25
-requests @ file:///croot/requests_1707355572290/work
+requests==2.31.0
 safetensors==0.4.2
-six @ file:///tmp/build/80754af9/six_1644875935023/work
-sniffio @ file:///croot/sniffio_1705431295498/work
+six==1.16.0
+sniffio==1.3.1
 SQLAlchemy==2.0.29
 sympy==1.12
-tenacity @ file:///croot/tenacity_1682972284834/work
+tbb==2021.12.0
+tenacity==8.2.3
 tokenizers==0.15.2
 torch==2.2.1
-tqdm @ file:///croot/tqdm_1679561862951/work
+tqdm==4.66.2
 transformers==4.39.1
 triton==2.2.0
-types-pytz @ file:///croot/types-pytz_1665514243479/work
 typing_extensions==4.10.0
-tzdata @ file:///croot/python-tzdata_1690578112552/work
-urllib3 @ file:///croot/urllib3_1707770551213/work
-Werkzeug @ file:///croot/werkzeug_1706210078083/work
+urllib3==2.2.1
+Werkzeug==3.0.1
