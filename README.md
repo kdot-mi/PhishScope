@@ -29,7 +29,7 @@ To use the APIs, create a **config.py** file with the API keys.
 
 Replace 'API KEY' with the <a href="https://docs.virustotal.com/reference/overview">*VirusTotal*</a> & <a href="https://help.openai.com/en/articles/4936850-where-do-i-find-my-openai-api-key">*OPENAI*</a> API Keys.
 
-Place the **config.py** file inside the  *Phishing-Detection-App\Flask App* directory. This is the file tree:
+Place the **config.py** file inside the *Phishing-Detection-App\Flask App* directory. This is the file tree:
 
 ```
 Flask App/
@@ -47,6 +47,13 @@ Flask App/
 *PhishScope* can run on any operating system that can install Python (Windows, Mac OS, and most Linux distributions). We recommend setting up a virtual environment and activating it (<a href="https://docs.python.org/3/tutorial/venv.html">Python 3 Virtual Environment Tutorial</a>).
 
 Flask supports Python 3.8 and newer.
+
+The **requirements.txt** file inside the *Phishing-Detection-App\Flask App* directory should list all Python libraries and dependencies that *PhishScope* uses. Use pip to install:
+```
+pip install -r requirements.txt
+```
+
+If you need to install the project dependencies manually, check below for installation.
 
 **Project Dependencies:**
 <br>
@@ -80,7 +87,9 @@ Install Database Libraries
 <br>
 Make sure you are in the *Phishing-Detection-App\Flask App* directory
 <br>
-<code>$ python3 app.py</code>
+```
+python3 app.py
+```
 
 The default Flask WSGI server (<a href="https://werkzeug.palletsprojects.com/en/3.0.x/">Werkzeug</a>) will be used. If you wish to use another WSGI server (e.g. <a href="https://gunicorn.org/">Gunicorn</a>) or use a reverse proxy (e.g. <a href="https://nginx.org/en/">NGINX</a>), read the <a href="https://flask-socketio.readthedocs.io/en/latest/deployment.html">Flask-SocketIO documentation</a>.
 

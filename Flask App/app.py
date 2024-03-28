@@ -6,7 +6,6 @@ from time import sleep
 from my_model import check_phishing
 from config import VIRUSTOTAL_API_KEY, OPENAI_API_KEY
 from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
 from datetime import datetime
 from zoneinfo import ZoneInfo
 import re
@@ -19,6 +18,7 @@ client = OpenAI(api_key=OPENAI_API_KEY)
 import magic
 from email import message_from_bytes, policy
 from email.parser import BytesParser
+from email.utils import parseaddr
 import pdfplumber
 import docx
 import chardet
@@ -85,7 +85,7 @@ def upload_file():
         elif file_type == 'message/rfc822':
             # Handle email files (e.g., .eml)
             email_message = message_from_bytes(file.read(), policy=policy.default)
-            email_address = email_message['From']
+            email_address = extract_email_address(email_message['From'])
             mail_body = get_body(email_message)
         elif file_type == 'application/pdf':
             # Handle PDF files
@@ -173,7 +173,12 @@ def get_body(email_message):
     return None
 
 def extract_email_address(content):
-    # A simple regex for extracting an email address
+    # First, try to parse the content as an email address using the standard library
+    parsed_email = parseaddr(content)[1]
+    if parsed_email:
+        return parsed_email
+
+    # If parsing fails, try the regular expression approach
     match = re.search(r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b', content)
     return match.group(0) if match else None
 
@@ -344,6 +349,34 @@ def generate_response(prompt):
 
     message = response.choices[0].message.content
     return message
+
+@app.route('/blacklist', methods=['GET', 'POST'])
+def manage_blacklist():
+    if request.method == 'POST':
+        # Handle adding or removing emails from the blacklist
+        if 'add_email' in request.form:
+            email = request.form['email']
+            if not Blacklist.query.filter_by(email=email).first():
+                new_blacklist_entry = Blacklist(email=email)
+                db.session.add(new_blacklist_entry)
+                db.session.commit()
+                flash(f'Email {email} added to the blacklist.', 'success')
+            else:
+                flash(f'Email {email} is already in the blacklist.', 'warning')
+        elif 'remove_email' in request.form:
+            email = request.form['email']
+            blacklist_entry = Blacklist.query.filter_by(email=email).first()
+            if blacklist_entry:
+                db.session.delete(blacklist_entry)
+                db.session.commit()
+                flash(f'Email {email} removed from the blacklist.', 'success')
+            else:
+                flash(f'Email {email} is not in the blacklist.', 'warning')
+
+    # Retrieve the blacklist entries from the database
+    blacklist_entries = Blacklist.query.all()
+
+    return render_template('blacklist.html', blacklist_entries=blacklist_entries)
 
 if __name__ == '__main__':
     app.run(debug=True, port=9001)
