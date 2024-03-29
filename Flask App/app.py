@@ -173,14 +173,16 @@ def get_body(email_message):
     return None
 
 def extract_email_address(content):
-    # First, try to parse the content as an email address using the standard library
-    parsed_email = parseaddr(content)[1]
-    if parsed_email:
-        return parsed_email
+    potential_emails = re.findall(r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b', content)
+    validated_emails = []
 
-    # If parsing fails, try the regular expression approach
-    match = re.search(r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b', content)
-    return match.group(0) if match else None
+    for email in potential_emails:
+        parsed_email = parseaddr(email)[1]
+        if parsed_email:
+            validated_emails.append(parsed_email)
+
+    return validated_emails
+
 
 def blacklist_email(email_address):
     # Check if the email address is already in the blacklist to prevent duplicates
