@@ -5,45 +5,53 @@
     <script>
         function toggleBlacklist() {
             var blacklistList = document.getElementById("blacklist-list");
-            if (blacklistList.style.display === "none") {
-                blacklistList.style.display = "block";
-            } else {
-                blacklistList.style.display = "none";
-            }
+            blacklistList.style.display = blacklistList.style.display === "none" ? "block" : "none";
         }
     </script>
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles2.css', v=current_time) }}">
 </head>
 <body>
-    <h1>Blacklist Management</h1>
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('index') }}">Upload</a></li>
+            <li><a href="{{ url_for('analytics') }}">Analytics</a></li>
+            <li><a href="{{ url_for('chatbot') }}">Chatbot</a></li>
+            <li><a href="" class="current">Blacklist</a></li>
+        </ul>
+    </nav>
+    <div class="container"> <!-- Container for centering content -->
+        <h1>Blacklist Management</h1>
 
-    {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-            {% for category, message in messages %}
-                <div class="{{ category }}">{{ message }}</div>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <button onclick="toggleBlacklist()">Toggle Blacklist</button>
+
+        <ul id="blacklist-list" style="display: none;">
+            {% for entry in blacklist_entries %}
+                <li>{{ entry.email }}</li>
             {% endfor %}
-        {% endif %}
-    {% endwith %}
+        </ul>
 
-    <button onclick="toggleBlacklist()">Toggle Blacklist</button>
+        <h2>Add Email to Blacklist</h2>
+        <form method="post">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            <button type="submit" name="add_email">Add</button>
+        </form>
 
-    <ul id="blacklist-list" style="display: none;">
-        {% for entry in blacklist_entries %}
-            <li>{{ entry.email }}</li>
-        {% endfor %}
-    </ul>
-
-    <h2>Add Email to Blacklist</h2>
-    <form method="post">
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
-        <button type="submit" name="add_email">Add</button>
-    </form>
-
-    <h2>Remove Email from Blacklist</h2>
-    <form method="post">
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
-        <button type="submit" name="remove_email">Remove</button>
-    </form>
+        <h2>Remove Email from Blacklist</h2>
+        <form method="post">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            <button type="submit" name="remove_email">Remove</button>
+        </form>
+    </div>
 </body>
 </html>

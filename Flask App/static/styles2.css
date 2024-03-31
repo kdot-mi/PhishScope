@@ -1,0 +1,194 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);
+}
+
+.container {
+    width: 90%;
+    max-width: 600px; /* Adjust based on your preference */
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+h1, h2 {
+    color: black;
+}
+
+/* Styling for buttons */
+button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: auto; /* Allows the button to grow with its content */
+    margin: 10px; /* Adds spacing around the button */
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Styling for input fields */
+input[type="email"] {
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    margin-left: 40px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 80%; /* Adjusts the input width to be less than the container */
+    max-width: 500px; /* Ensures inputs are not too wide on larger screens */
+    display: block; /* Necessary for centering */
+}
+
+/* Styling for list items in the blacklist */
+ul#blacklist-list {
+    list-style-type: none;
+    padding: 0;
+    width: 100%;
+    text-align: center; /* Center-align the text */
+}
+
+ul#blacklist-list li {
+    background-color: rgba(255, 255, 255, 0.9);
+    margin-top: 5px;
+    padding: 10px;
+    border-radius: 5px;
+    /* Center the list items */
+    display: inline-block; /* or 'block' if you want each item to be on a new line */
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%; /* or another percentage/fixed width based on your design */
+}
+
+/* Message styling */
+div[category="success"], div[category="error"] {
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    width: 80%; /* Adjusts the message width to be less than the container */
+    max-width: 500px; /* Ensures messages are not too wide on larger screens */
+    text-align: left; /* Aligns text inside messages to the left */
+}
+
+div[category="success"] {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+div[category="error"] {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+/* Animation for showing/hiding blacklist */
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+}
+
+/* Utilize the animations */
+#blacklist
+
+/* Nav bar styling */
+/* Resets the padding and margin to ensure consistency across browsers */
+ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+/* Resets the padding and margin to ensure consistency across browsers */
+ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+/* Main navigation styling */
+nav {
+    background: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000; /* Ensure nav is above other content */
+}
+
+nav ul {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+}
+
+nav li {
+    list-style: none;
+    margin: 0 10px; /* Adjust margin to control spacing between nav items */
+}
+
+nav a {
+    padding: 15px 20px;
+    font-size: 20px;
+    font-family: 'Poppins', sans-serif;
+    color: white;
+    text-decoration: none;
+    position: relative;
+    display: block; /* Aligns the nav item properly */
+    transition: color 0.3s ease;
+}
+
+nav a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    background: white;
+    bottom: 0;
+    left: 0;
+    transition: width 0.3s ease;
+}
+
+nav a:hover::after, .current::after {
+    width: 100%;
+}
+
+nav a:hover, .current {
+    color: #C0C0C0;
+    text-decoration: none;
+}
+
+.current {
+    pointer-events: none;
+    border-bottom: 2px solid white;
+}

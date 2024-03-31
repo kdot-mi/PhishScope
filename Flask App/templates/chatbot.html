@@ -2,16 +2,84 @@
 <html>
 <head>
     <title>Chatbot</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles2.css', v=current_time) }}">
+    <style>
+        body, html {
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px; /* Same as blacklist manager */
+            margin: 0 auto;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        input[type="text"],
+        input[type="submit"] {
+            width: 80%; /* Adjust as needed to match blacklist manager */
+            margin: 10px auto;
+            display: block;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        input[type="submit"] {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        label {
+            display: block;
+            margin-bottom: .5rem;
+            font-weight: bold;
+        }
+
+        p {
+            background-color: #eee;
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Chatbot</h1>
-    <form method="post" action="{{ url_for('chatbot') }}">
-        <label for="user_input">Enter your message:</label>
-        <input type="text" id="user_input" name="user_input" required>
-        <input type="submit" value="Send">
-    </form>
-    {% if response %}
-        <p>Chatbot response: {{ response }}</p>
-    {% endif %}
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('index') }}">Upload</a></li>
+            <li><a href="{{ url_for('analytics') }}">Analytics</a></li>
+            <li><a href="" class="current">Chatbot</a></li>
+            <li><a href="{{ url_for('manage_blacklist') }}">Blacklist</a></li>
+        </ul>
+    </nav>
+    <div class="container"> <!-- Centered container for chatbot content -->
+        <h1>Chatbot</h1>
+        <form method="post" action="{{ url_for('chatbot') }}">
+            <label for="user_input">Enter your message:</label>
+            <input type="text" id="user_input" name="user_input" required>
+            <input type="submit" value="Send">
+        </form>
+        {% if response %}
+            <p>Chatbot response: {{ response }}</p>
+        {% endif %}
+    </div>
 </body>
 </html>
