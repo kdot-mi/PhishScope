@@ -86,7 +86,11 @@ button[type="submit"]:hover {
     font-family: 'Poppins', sans-serif;
     color: #fff;
     font-size: 1 rem;
+    cursor: default;
+    user-select: none;
 }
+
+
 
 /* Nav bar styling */
 nav li{
