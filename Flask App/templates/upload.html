@@ -22,11 +22,24 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
-    <!-- Testing New UI -->
-    <div class="container" >
-        
-        <img src="{{ url_for('static', filename='phishscope14.svg') }}" alt="PhishScope">
 
+    <!-- Navigation Bar -->
+    <nav>
+        <ul>
+            <li><a href="" class="current">Upload</a></li>
+            <li><a href="{{ url_for('analytics') }}">Analytics</a></li>
+            <li><a href="{{ url_for('chatbot') }}">Chatbot</a></li>
+            <li><a href="{{ url_for('manage_blacklist') }}">Blacklist</a></li>
+        </ul>
+    </nav>
+    
+    <div class="container">
+        <img src="{{ url_for('static', filename='phishscope14.svg') }}" alt="PhishScope">
+        <div class="description">
+            <p>
+                <i>Analysis tool for phishing emails, files, and URLs for malicious content.</i>
+            </p>
+        </div>
         <div class="custom-container">
             <header>Upload Your Email File</header>
             <form action="/upload" method="post" enctype="multipart/form-data">
@@ -57,13 +70,6 @@
     </div>
     <!-- End of Email Upload -->
 
-    <!-- Links for Analytics and Chatbot (needs redesign) -->
-
-    <a href="{{ url_for('analytics') }}">Analytics</a>
-    <br>
-    <a href="{{ url_for('chatbot') }}">Chatbot</a>
-    <br>
-    <a href="{{ url_for('manage_blacklist') }}">Blacklist</a>
 
     <!-- Content for Attachment Scanner tab -->
     <p>Upload your attachment file for scanning.</p>
@@ -78,14 +84,6 @@
         <input type="text" name="url">
         <input type="submit" value="Check URL">
     </form>
-
-
-    <!-- Content for About  tab -->
-    <p>What is PhishScope?</p>
-    <p>PhishScope is a tool that allows you to scan emails, URLs, and typosquatting domains for phishing links and malicious content.</p>
-
-    <p>How does it work?</p>
-    <p>PhishScope uses machine learning to analyze emails and URLs for phishing links and malicious content. It also monitors typosquatting domains to detect potential phishing attacks.</p>
 
     {% if show_results %}
     <div class="text-center mt-4">

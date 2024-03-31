@@ -15,7 +15,6 @@ body{
     overflow: auto;
 }
 
-
 .container{
     font-family: 'Poppins', sans-serif;
     justify-content: center;
@@ -23,13 +22,13 @@ body{
     font: 20px;
     display: flex;
     flex-direction: column;
-    height: 100vh;
     width: 100%;
 }
 
 .container img{
     width:750px;
     height: auto;
+    margin: 20px 0;
 }
 
 
@@ -43,7 +42,7 @@ body{
 }
 
 .custom-container header{
-    color: grey;
+    color: gray;
     font-size: 27px;
     font-weight: 600;
     text-align: center;
@@ -63,7 +62,7 @@ body{
 
 .custom-container .img1{
     font-size: 50px;
-    color: grey;
+    color: gray;
 }
 
 form p{
@@ -83,3 +82,63 @@ button[type="submit"]:hover {
     color: #fff;
 }
 
+.description{
+    font-family: 'Poppins', sans-serif;
+    color: #fff;
+    font-size: 1 rem;
+}
+
+/* Nav bar styling */
+nav li{
+    display: inline;
+    margin: 10px;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 30px;
+}
+
+nav li a{
+    text-decoration: none;
+    color: #C0C0C0;
+    font-size: 20px;
+    font-family: 'Poppins', sans-serif;
+    position: relative;
+    overflow: hidden;
+}
+
+nav li a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    background: white;
+    bottom: 0;
+    left: 0;
+    transition: width 0.3s ease;
+}
+
+nav li a:hover::after {
+    width: 100%;
+}
+
+.current{
+    color: white;
+    cursor: default;
+    pointer-events: none;
+    border-bottom: 2px solid white;
+}
+
+nav li a:hover{
+    color: white;
+    text-decoration: none;
+}
+
+nav ul{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-top: 20px;
+}
