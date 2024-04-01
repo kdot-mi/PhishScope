@@ -34,12 +34,16 @@
     </nav>
     
     <div class="container">
-        <img src="{{ url_for('static', filename='phishscope14.svg') }}" alt="PhishScope">
+        <img src="{{ url_for('static', filename='phishscope14.svg') }}" alt="PhishScope" draggable="false">
         <div class="description">
             <p>
                 <i>Analysis tool for phishing emails, files, and URLs for malicious content.</i>
             </p>
         </div>
+
+        <!-- Mini Navbar/tab for Selecting Email, File, or URL -->
+
+
         <div class="custom-container">
             <header>Upload Your Email File</header>
             <form action="/upload" method="post" enctype="multipart/form-data">

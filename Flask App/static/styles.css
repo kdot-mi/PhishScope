@@ -90,8 +90,6 @@ button[type="submit"]:hover {
     user-select: none;
 }
 
-
-
 /* Nav bar styling */
 nav li{
     display: inline;
@@ -110,6 +108,8 @@ nav li a{
     font-family: 'Poppins', sans-serif;
     position: relative;
     overflow: hidden;
+    user-select: none;
+    cursor: pointer;
 }
 
 nav li a::after {
