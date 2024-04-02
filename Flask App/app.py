@@ -80,12 +80,12 @@ def upload_file():
         if file_type == 'text/plain':
             # Handle plain text files
             content = file.read().decode('utf-8')
-            email_address = extract_email_address(content)
+            email_addresses = extract_email_address(content)
             mail_body = content
         elif file_type == 'message/rfc822':
             # Handle email files (e.g., .eml)
             email_message = message_from_bytes(file.read(), policy=policy.default)
-            email_address = extract_email_address(email_message['From'])
+            email_addresses = extract_email_address(email_message['From'])
             mail_body = get_body(email_message)
         elif file_type == 'application/pdf':
             # Handle PDF files
@@ -93,14 +93,14 @@ def upload_file():
                 mail_body = ''
                 for page in pdf.pages:
                     mail_body += page.extract_text()
-            email_address = extract_email_address(mail_body)
+            email_addresses = extract_email_address(mail_body)
         elif file_type == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
             # Handle DOCX files
             doc = docx.Document(file)
             mail_body = ''
             for para in doc.paragraphs:
                 mail_body += para.text + '\n'
-            email_address = extract_email_address(mail_body)
+            email_addresses = extract_email_address(mail_body)
         else:
             # Handle other file types (e.g., .jpg, .png, etc.)
             flash(f'File type {file_type} is not supported')
@@ -119,8 +119,9 @@ def upload_file():
             if label == 'phishing':
                 phishing_detected = True
 
-                if email_address:
-                    blacklist_email(email_address)
+                if email_addresses:  # Change here to check if list is not empty
+                    email_address = email_addresses[0]  # Use only the first found email
+                    blacklist_email(email_address)  # Call with a single email address
                     flash('Phishing detected. Sender added to blacklist.')
                 else:
                     flash('Phishing detected, but no email address found.')
@@ -136,7 +137,9 @@ def upload_file():
 
         # Log the phishing check result
         status = 'unsafe' if phishing_detected else 'safe'
-        new_analytics = EmailAnalytics(email=email_address or 'unknown', status=status, score=phishing_results[0]['score'] if phishing_detected else 0)
+        # Adjust to handle potential list of email addresses safely
+        email_address_to_log = email_addresses[0] if email_addresses else 'unknown'
+        new_analytics = EmailAnalytics(email=email_address_to_log, status=status, score=phishing_results[0]['score'] if phishing_detected else 0)
         db.session.add(new_analytics)
         db.session.commit()
 
