@@ -70,14 +70,14 @@ form p{
     font-size: 16px;
 }
 
-button[type="submit"] {
+button[type="submit"], #url-scanner input[type="submit"]  {
     width: 100%;
     padding: 10px;
     border-radius: 5px;
     border: 1px solid #ccc;
 }
 
-button[type="submit"]:hover {
+button[type="submit"]:hover, #url-scanner input[type="submit"]:hover {
     background: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);
     color: #fff;
 }
@@ -177,5 +177,33 @@ nav ul{
 #mini-nav .current-tab {
     border-bottom: 2px solid white;
     color: white;
+}
+
+/* url scanner */
+#url-scanner {
+    background-color: white;
+    border-radius: 5px;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+#url-scanner p {
+    font-size: 18px;
+    color: gray;
+    margin-bottom: 10px;
+}
+
+#url-scanner form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#url-scanner input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 10px;
 }
 
