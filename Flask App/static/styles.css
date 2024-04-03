@@ -41,7 +41,7 @@ body{
     margin-top: 20px;
 }
 
-.custom-container header{
+.custom-container header, .custom-container h4{
     color: gray;
     font-size: 27px;
     font-weight: 600;
@@ -206,4 +206,5 @@ nav ul{
     border-radius: 4px;
     margin-bottom: 10px;
 }
+
 
