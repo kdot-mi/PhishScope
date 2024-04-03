@@ -101,7 +101,7 @@ nav li{
     padding: 0 30px;
 }
 
-nav li a{
+nav li a, #mini-nav button{
     text-decoration: none;
     color: #C0C0C0;
     font-size: 20px;
@@ -112,7 +112,7 @@ nav li a{
     cursor: pointer;
 }
 
-nav li a::after {
+nav li a::after, #mini-nav button::after {
     content: '';
     position: absolute;
     width: 0;
@@ -120,21 +120,22 @@ nav li a::after {
     background: white;
     bottom: 0;
     left: 0;
-    transition: width 0.3s ease;
+    transition: width 0s ease-in-out;
 }
 
-nav li a:hover::after {
+nav li a:hover::after, #mini-nav button:hover::after {
     width: 100%;
+    transition: width 0.3s ease-in-out;
 }
 
-.current{
+.current, .current-tab{
     color: white;
     cursor: default;
     pointer-events: none;
     border-bottom: 2px solid white;
 }
 
-nav li a:hover{
+nav li a:hover, #mini-nav button:hover{
     color: white;
     text-decoration: none;
 }
@@ -146,3 +147,35 @@ nav ul{
     width: 100%;
     margin-top: 20px;
 }
+
+/* Mini nav bar styling */
+#mini-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#mini-nav button {
+    text-decoration: none;
+    color: #C0C0C0;
+    font-size: 20px;
+    font-family: 'Poppins', sans-serif;
+    position: relative;
+    overflow: hidden;
+    user-select: none;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0px;
+    margin: 0 15px;
+}
+
+#mini-nav button:focus {
+    outline: none;
+}
+
+#mini-nav .current-tab {
+    border-bottom: 2px solid white;
+    color: white;
+}
+
