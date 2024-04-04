@@ -276,6 +276,7 @@ def analytics():
 
     # Create the pie chart
     pie_chart = go.Figure(data=[go.Pie(labels=labels, values=values)])
+    pie_chart.update_layout(title='Safe vs Unsafe Emails')
     pie_div = plotly.offline.plot(pie_chart, output_type='div', include_plotlyjs=False)
 
     # Get the data grouped by date and status
