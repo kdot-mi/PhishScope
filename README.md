@@ -75,7 +75,8 @@ Other Dependencies
 <code>$ pip install python-docx</code>
 <br>
 <code>$ pip install chardet</code>
-
+<br>
+<code>$ pip install tzdata</code>
 
 Install Database Libraries
 <br>
