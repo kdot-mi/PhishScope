@@ -268,7 +268,8 @@ def scan_url():
         if report_response.status_code == 200:
             results = report_response.json()['data']['attributes']['last_analysis_stats']
 
-            whois_url = f"https://www.virustotal.com/api/v3/domains/{url_to_scan}/historical_whois?limit=10"
+            domain = url_to_scan.split("//")[-1].split("/")[0]  # Extract just the domain from the URL
+            whois_url = f"https://www.virustotal.com/api/v3/domains/{domain}/historical_whois?limit=10"
             whois_response = requests.get(whois_url, headers=submission_headers)
 
             if whois_response.status_code == 200:
