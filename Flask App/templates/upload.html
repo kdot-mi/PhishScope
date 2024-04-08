@@ -110,7 +110,18 @@
         </div>
         {% endif %}
     </div>
-    
+
+        {% if show_url_results %}
+        <div class="text-center mt-4">
+            <h3>URL Scan Results</h3>
+            <p>Malicious: {{ stats.malicious }}</p>
+            <p>Suspicious: {{ stats.suspicious }}</p>
+            <p>Undetected: {{ stats.undetected }}</p>
+            <p>Harmless: {{ stats.harmless }}</p>
+            <!-- ... other stats as needed -->
+        </div>
+        {% endif %}
+    </div>
 
     <!-- Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

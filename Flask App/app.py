@@ -13,6 +13,7 @@ import plotly
 import plotly.graph_objs as go
 from collections import defaultdict
 from openai import OpenAI
+import json
 
 client = OpenAI(api_key=OPENAI_API_KEY)
 import magic
@@ -245,20 +246,40 @@ def attachment_upload():
     return redirect(url_for('index'))
 
 @app.route('/url', methods=['POST'])
-def upload_url():
-    if request.method == 'POST':
-        # Check if the post request has the URL part
-        if 'url' not in request.form:
-            flash('No URL part')
-            return redirect(request.url)
-        url = request.form['url']
-        # If user does not enter URL
-        if url == '':
-            flash('No URL entered')
-            return redirect(request.url)
-        # Here, you can add your processing logic
-        flash('URL successfully uploaded')
-        return redirect(url_for('index'))
+def scan_url():
+    url_to_scan = request.form['url']
+    submission_headers = {
+        "accept": "application/json",
+        "x-apikey": VIRUSTOTAL_API_KEY,
+        "content-type": "application/x-www-form-urlencoded"
+    }
+    payload = {"url": url_to_scan}
+    response = requests.post('https://www.virustotal.com/api/v3/urls', data=payload, headers=submission_headers)
+    print(response)
+    sleep(15)  # Delay to wait for the analysis to complete
+    
+    if response.status_code == 200:
+        url_id = response.json()['data']['id'].split('-')[1]
+        report_url = f'https://www.virustotal.com/api/v3/urls/{url_id}'
+        print(report_url)
+        report_headers = {"accept": "application/json", "x-apikey": VIRUSTOTAL_API_KEY}
+        report_response = requests.get(report_url, headers=report_headers)
+        print(report_response)
+        
+        if report_response.status_code == 200:
+            results = report_response.json()['data']['attributes']['last_analysis_stats']
+            results_file = os.path.join(app.root_path, 'url_scan_results.txt')
+            whois_data = results.get('data', {}).get('attributes', {}).get('whois', None)
+            print("Executing file SAVE")
+            with open(results_file, 'a') as f:
+                f.write(f'URL: {url_to_scan}\n')
+                f.write(f'Results: {str(results)}\n\n')
+                f.write(f'WHOIS: {str(whois_data)}\n\n')
+            return render_template('upload.html', show_url_results=True, stats=results, current_time=time.time())
+        else:
+            print(f"Error: {report_response.status_code}")
+            print(report_response.text)  # Print the error response
+    
     return redirect(url_for('index'))
 
 @app.route('/analytics')
