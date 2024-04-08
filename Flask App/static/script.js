@@ -17,3 +17,6 @@ function showContent(id) {
     document.getElementById(id).style.display = 'block';
 }
 
+document.getElementById('rating').oninput = function() {
+    document.getElementById('ratingValue').textContent = this.value;
+}
