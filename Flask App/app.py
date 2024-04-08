@@ -384,5 +384,15 @@ def manage_blacklist():
 
     return render_template('blacklist.html', blacklist_entries=blacklist_entries)
 
+
+# Feedback
+@app.route('/feedback', methods=['GET', 'POST'])
+def feedback():
+    if request.method == 'POST':
+        pass
+
+    return render_template('feedback.html')
+
+
 if __name__ == '__main__':
     app.run(debug=True, port=9001)

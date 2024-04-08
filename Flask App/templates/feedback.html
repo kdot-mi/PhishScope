@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhishScope - Upload Email</title>
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css', v=current_time) }}">
+    
+    <!-- JQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" crossorigin="anonymous"></script>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" crossorigin="anonymous">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,500;1,500&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('index')}}">Upload</a></li>
+            <li><a href="{{ url_for('analytics') }}">Analytics</a></li>
+            <li><a href="{{ url_for('chatbot') }}">Chatbot</a></li>
+            <li><a href="{{ url_for('manage_blacklist') }}">Blacklist</a></li>
+            <li><a href="" class="current">Feedback</a></li>
+        </ul>
+    </nav>
+
+    <!-- Feedback Form -->
+    <div class="container">
+        <form action="{{ url_for('feedback') }}" method="post">
+            <label for="feedback">Your Feedback:</label><br>
+            <textarea id="feedback" name="feedback" rows="4" cols="50"></textarea><br>
+            <label for="rating">Rate Accuracy:</label><br>
+            <input type="range" id="rating" name="rating" min="1" max="5" step="0.5" value="1"><br>
+            <span id="ratingValue">1</span><br>
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Custom JS -->
+    <script src="{{ url_for('static', filename='script.js', v=current_time) }}"></script>
+</body>
+</html>
