@@ -13,7 +13,8 @@ import plotly
 import plotly.graph_objs as go
 from collections import defaultdict
 from openai import OpenAI
-import json
+from datetime import datetime
+import re
 
 client = OpenAI(api_key=OPENAI_API_KEY)
 import magic
@@ -256,26 +257,44 @@ def scan_url():
     payload = {"url": url_to_scan}
     response = requests.post('https://www.virustotal.com/api/v3/urls', data=payload, headers=submission_headers)
     print(response)
-    sleep(15)  # Delay to wait for the analysis to complete
+    sleep(5)  # Delay to wait for the analysis to complete
     
     if response.status_code == 200:
         url_id = response.json()['data']['id'].split('-')[1]
         report_url = f'https://www.virustotal.com/api/v3/urls/{url_id}'
-        print(report_url)
         report_headers = {"accept": "application/json", "x-apikey": VIRUSTOTAL_API_KEY}
         report_response = requests.get(report_url, headers=report_headers)
-        print(report_response)
         
         if report_response.status_code == 200:
             results = report_response.json()['data']['attributes']['last_analysis_stats']
+
+            whois_url = f"https://www.virustotal.com/api/v3/domains/{url_to_scan}/historical_whois?limit=10"
+            whois_response = requests.get(whois_url, headers=submission_headers)
+
+            if whois_response.status_code == 200:
+                whois_data = whois_response.json()
+                creation_date = None
+                for data_entry in whois_data['data']:
+                    whois_map = data_entry.get('attributes', {}).get('whois_map', {})
+                    creation_date = whois_map.get('Creation Date')
+                    if creation_date:
+                        match = re.search(r'\d{4}-\d{2}-\d{2}', creation_date)
+                        if match:
+                            # Extract the matched date string
+                            date_part = match.group(0)
+                            # Parse the date part
+                            parsed_date = datetime.strptime(date_part, "%Y-%m-%d")
+                            # Format it into the desired format
+                            human_readable_date = parsed_date.strftime("%m/%d/%Y")
+                        break  # Stop after finding the first creation date
+
             results_file = os.path.join(app.root_path, 'url_scan_results.txt')
-            whois_data = results.get('data', {}).get('attributes', {}).get('whois', None)
             print("Executing file SAVE")
             with open(results_file, 'a') as f:
                 f.write(f'URL: {url_to_scan}\n')
                 f.write(f'Results: {str(results)}\n\n')
-                f.write(f'WHOIS: {str(whois_data)}\n\n')
-            return render_template('upload.html', show_url_results=True, stats=results, current_time=time.time())
+                f.write(f'WHOIS Data: {whois_data}\n\n')
+            return render_template('upload.html', show_url_results=True, stats=results, creation_date=human_readable_date, current_time=time.time())
         else:
             print(f"Error: {report_response.status_code}")
             print(report_response.text)  # Print the error response
