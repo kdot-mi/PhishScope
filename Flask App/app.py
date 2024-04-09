@@ -453,6 +453,7 @@ def feedback():
 
     return render_template('feedback.html')
 
+# Training
 @app.route('/training')
 def training():
     # Render the training page
