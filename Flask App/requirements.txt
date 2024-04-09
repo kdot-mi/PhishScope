@@ -57,4 +57,4 @@ typing_extensions==4.10.0
 tzdata==2024.1
 urllib3==2.2.1
 Werkzeug==3.0.1
-
+Flask-Mail==0.9.1

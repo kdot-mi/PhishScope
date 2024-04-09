@@ -27,6 +27,19 @@ import chardet
 
 
 app = Flask(__name__)
+
+# Email 
+from flask_mail import Mail, Message
+
+app.config['MAIL_SERVER']='smtp.office365.com'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USERNAME'] = 'phishscope@outlook.com'
+app.config['MAIL_PASSWORD'] = 'seniorproject2024'
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USE_SSL'] = False
+
+mail = Mail(app)
+
 app.secret_key = 'your_secret_key'  # Needed for flash messages and sessions
 
 # Database configuration
@@ -430,10 +443,14 @@ def manage_blacklist():
 @app.route('/feedback', methods=['GET', 'POST'])
 def feedback():
     if request.method == 'POST':
-        pass
+        email = request.form['email']
+        feedback = request.form['feedback']
+        rating = request.form['rating']
+
+        msg = Message('New Feedback', sender = 'phishscope@outlook.com', recipients = ['phishscope@outlook.com'])
+        msg.body = f"Email: {email}\nFeedback: {feedback}\nRating: {rating}"
+        mail.send(msg)
 
     return render_template('feedback.html')
-
-
 if __name__ == '__main__':
     app.run(debug=True, port=9001)
