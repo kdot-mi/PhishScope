@@ -452,5 +452,12 @@ def feedback():
         mail.send(msg)
 
     return render_template('feedback.html')
+
+@app.route('/training')
+def training():
+    # Render the training page
+    return render_template('training.html')
+
+
 if __name__ == '__main__':
     app.run(debug=True, port=9001)

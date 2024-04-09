@@ -192,3 +192,9 @@ nav a:hover, .current {
     pointer-events: none;
     border-bottom: 2px solid white;
 }
+
+img {
+    max-width: 88%; /* Make the image width not exceed the container width */
+    height: auto; /* Keep the image's aspect ratio */
+    border-radius: 10px; /* Optional: if you want to have rounded corners */
+}
