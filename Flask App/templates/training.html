@@ -1,0 +1,158 @@
+<!-- training.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phishing Email Training</title>
+    <!-- Add any necessary stylesheets or scripts -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles2.css', v=current_time) }}">
+
+    <style>
+        /* Add CSS styles */
+        body {
+            font-family: Arial, sans-serif; /* Set a default font family */
+            background: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);
+            padding: 20px; /* Add some padding to the body */
+            display: flex; /* Use flexbox to align items */
+            justify-content: center; /* Center the form horizontally */
+            align-items: center; /* Center the form vertically */
+            min-height: 100vh; /* Set the body height to at least the full viewport height */
+            margin: 0; /* Remove default margin */
+        }
+
+        #training-form {
+            width: 80%; /* Set the form width */
+            max-width: 600px; /* Set the maximum form width */
+            margin: auto; /* Center the form horizontally */
+            display: flex; /* Use flexbox to align items */
+            flex-direction: column; /* Stack form items vertically */
+            justify-content: center; /* Center the form vertically */
+            align-items: center; /* Center the form horizontally */
+            padding: 20px; /* Add padding to the form */
+            background-color: #fff; /* Set a background color for the form */
+            border-radius: 8px; /* Add rounded corners to the form */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a shadow effect to the form */
+        }
+
+        .question {
+            margin-bottom: 20px; /* Add space below each question */
+            text-align: left; /* Align question text to the left */
+        }
+
+        .explanation {
+            margin-top: 10px; /* Add space above each explanation */
+            display: none; /* Hide explanations by default */
+            color: red; /* Set the color of the explanation text */
+        }
+
+        button {
+            margin-top: 20px; /* Add space above the submit button */
+        }
+    </style>
+
+
+</head>
+<body>
+
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('index')}}">Upload</a></li>
+            <li><a href="{{ url_for('analytics') }}">Analytics</a></li>
+            <li><a href="{{ url_for('chatbot') }}">Chatbot</a></li>
+            <li><a href="{{ url_for('manage_blacklist') }}">Blacklist</a></li>
+            <li><a href="{{ url_for('feedback') }}">Feedback</a></li>
+        </ul>
+    </nav>
+<div class="container">
+<h1>Phishing Email Training</h1>
+<!-- Add example phishing email image here -->
+<img src="/static/PhishingEmailExample.png" alt="Example Phishing Email">
+
+<h2>Questions</h2>
+
+<!-- Add questionnaire here -->
+<form id="training-form">
+    <div class="question">
+        <label for="question1">What is unusual about where this email came from?</label><br>
+        <input type="radio" id="question1-option1" name="question1" value="Amazon">
+        <label for="question1-option1">Its from Amazon</label><br>
+        <input type="radio" id="question1-option2" name="question1" value="Do Not Reply">
+        <label for="question1-option2">It says do-not-reply in the email</label><br>
+        <input type="radio" id="question1-option3" name="question1" value="AppOnline" data-correct="true">
+        <label for="question1-option3">It says @apponline.info</label><br>
+        <div class="explanation" id="explanation1">Correct answer: It's unusual because the email address does not match the official Amazon domain.</div>
+    </div>
+
+    <div class="question">
+        <label for="question2">Which of the following is the most dangerous part of the email?</label><br>
+        <input type="radio" id="question2-option1" name="question2" value="Black Friday Deals">
+        <label for="question2-option1">The reference to black Friday deals</label><br>
+        <input type="radio" id="question2-option2" name="question2" value="Amazon Customer">
+        <label for="question2-option2">They refer to you as an Amazon customer</label><br>
+        <input type="radio" id="question2-option3" name="question2" value="All Links" data-correct="true">
+        <label for="question2-option3">All of the given links</label><br>
+        <div class="explanation" id="explanation2">Correct answer: All links can potentially lead to phishing websites or malware.</div>
+    </div>
+
+    <div class="question">
+        <label for="question3">If this was a phishing email, what might come next after clicking one of the links?</label><br>
+        <input type="radio" id="question3-option1" name="question3" value="Best Buy">
+        <label for="question3-option1">It takes you to a Best Buy website</label><br>
+        <input type="radio" id="question3-option2" name="question3" value="Amazon Sign In" data-correct="true">
+        <label for="question3-option2">It takes you to an Amazon sign in screen</label><br>
+        <input type="radio" id="question3-option3" name="question3" value="Nothing Happens">
+        <label for="question3-option3">Nothing happens</label><br>
+        <div class="explanation" id="explanation3">Correct answer: Phishing emails often lead to fake login pages.</div>
+    </div>
+
+    <div class="question">
+        <label for="question4">If the link takes you to a sign in page, why might this be?</label><br>
+        <input type="radio" id="question4-option1" name="question4" value="Steal Information" data-correct="true">
+        <label for="question4-option1">To steal your sign in information</label><br>
+        <input type="radio" id="question4-option2" name="question4" value="Help Sign In">
+        <label for="question4-option1">To help you sign into Amazon</label><br>
+        <input type="radio" id="question4-option3" name="question4" value="Education">
+        <label for="question4-option1">To educate you about phishing emails</label><br>
+        <div class="explanation" id="explanation4">Correct answer: Fake login pages are often used to steal credentials</div>
+    </div>
+
+    <button type="button" onclick="submitForm()">Submit</button>
+</form>
+
+<!-- Add space to display feedback -->
+<div id="feedback"></div>
+
+<script>
+    function submitForm() {
+        var questions = document.querySelectorAll('.question');
+        var feedback = document.getElementById('feedback');
+        var correctCount = 0;
+
+        questions.forEach(function(question) {
+            var radios = question.querySelectorAll('input[type="radio"]');
+            var explanation = question.querySelector('.explanation');
+
+            radios.forEach(function(radio) {
+                if (radio.checked) {
+                    if (radio.dataset.correct === 'true') {
+                        correctCount++;
+                        explanation.style.display = 'block';
+                        explanation.textContent = 'Correct!';
+                        explanation.style.color = 'green';
+                    } else {
+                        explanation.style.display = 'block';
+                    }
+                }
+            });
+        });
+
+        feedback.textContent = 'You got ' + correctCount + ' out of ' + questions.length + ' correct!';
+    }
+</script>
+
+</div>
+
+<!-- Add any necessary scripts to handle form submission and display feedback -->
+</body>
+</html>

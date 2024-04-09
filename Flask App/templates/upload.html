@@ -47,8 +47,7 @@
             <li><a href="{{ url_for('analytics') }}">Analytics</a></li>
             <li><a href="{{ url_for('chatbot') }}">Chatbot</a></li>
             <li><a href="{{ url_for('manage_blacklist') }}">Blacklist</a></li>
-            <li><a href="{{ url_for('feedback') }}">
-                Feedback</a></li>
+            <li><a href="{{ url_for('feedback') }}">Feedback</a></li>
         </ul>
     </nav>
 
@@ -144,6 +143,45 @@
         </div>
         {% endif %}
     </div>
+    <!-- Button to trigger modal -->
+    <br>
+    <div style="text-align: center; margin-top: 125px;">
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#trainingModal">
+        Access Phishing Email Training
+    </button>
+    </div>
+    <br>
+
+    <!-- Modal -->
+    <div class="modal fade" id="trainingModal" tabindex="-1" aria-labelledby="trainingModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="trainingModalLabel">Phishing Email Training</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Would you like to access our phishing email training?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                    <button id="optInButton" type="button" class="btn btn-primary">Yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript to handle modal interaction -->
+    <script>
+        document.getElementById("optInButton").addEventListener("click", function() {
+            // Redirect the user to the training pag
+            window.location.href = "training"; // Assuming the route for training page is '/training'
+            // Alternatively, you can show/hide elements to indicate access to training
+            // Example: document.getElementById("trainingLink").style.display = "block";
+        });
+    </script>
 
     <!-- Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
