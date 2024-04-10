@@ -17,8 +17,15 @@ function showContent(id) {
     document.getElementById(id).style.display = 'block';
 }
 
-document.getElementById('rating').oninput = function() {
-    document.getElementById('ratingValue').textContent = this.value;
+var slider = document.getElementById("rating");
+    var output = document.getElementById("ratingValue");
+    slider.oninput = function() {
+        var value = this.value;
+        var text = value + " (";
+        if (value <= 2) text += "Not Accurate)";
+        else if (value <= 4) text += "Accurate)";
+        else text += "Very Accurate)";
+        output.innerHTML = text;
 }
 
 
