@@ -1,60 +1,127 @@
-<!-- training.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Phishing Email Training</title>
-    <!-- Add any necessary stylesheets or scripts -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles2.css', v=current_time) }}">
-
     <style>
-        /* Add CSS styles */
-        body {
-            font-family: Arial, sans-serif; /* Set a default font family */
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
             background: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);
-            padding: 20px; /* Add some padding to the body */
-            display: flex; /* Use flexbox to align items */
-            justify-content: center; /* Center the form horizontally */
-            align-items: center; /* Center the form vertically */
-            min-height: 100vh; /* Set the body height to at least the full viewport height */
-            margin: 0; /* Remove default margin */
+            overflow-x: hidden; /* Prevent horizontal scroll */
+        }
+
+        body {
+            padding-top: 60px; /* Add padding to the top to prevent nav overlap */
+        }
+
+        nav {
+            background: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);
+            width: 100%;
+            position: fixed;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            padding: 0;
+            margin: 0;
+            list-style: none;
+        }
+
+        nav li {
+            margin: 0 10px;
+        }
+
+        nav a {
+            padding: 15px 20px;
+            font-size: 20px;
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover, .current {
+            color: #C0C0C0;
+        }
+
+        .current {
+            pointer-events: none;
+            border-bottom: 2px solid white;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 700px; /* Adjusted for a wider container */
+            margin: 0 auto; /* Center the container */
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden; /* Prevent horizontal scroll inside the container */
+        }
+
+        h1, h2 {
+            color: black;
+            text-align: center; /* Center the titles */
         }
 
         #training-form {
-            width: 80%; /* Set the form width */
-            max-width: 600px; /* Set the maximum form width */
-            margin: auto; /* Center the form horizontally */
-            display: flex; /* Use flexbox to align items */
-            flex-direction: column; /* Stack form items vertically */
-            justify-content: center; /* Center the form vertically */
-            align-items: center; /* Center the form horizontally */
-            padding: 20px; /* Add padding to the form */
-            background-color: #fff; /* Set a background color for the form */
-            border-radius: 8px; /* Add rounded corners to the form */
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a shadow effect to the form */
+            width: 100%;
         }
 
         .question {
-            margin-bottom: 20px; /* Add space below each question */
-            text-align: left; /* Align question text to the left */
-        }
-
-        .explanation {
-            margin-top: 10px; /* Add space above each explanation */
-            display: none; /* Hide explanations by default */
-            color: red; /* Set the color of the explanation text */
+            text-align: left; /* Align questions to the left */
+            margin: 15px 0; /* Add margin for spacing */
         }
 
         button {
-            margin-top: 20px; /* Add space above the submit button */
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin: 20px 0; /* Added margin for spacing */
+        }
+
+        input[type="radio"] {
+            margin-right: 10px; /* Add space between radio button and label */
+        }
+
+        .explanation {
+            display: none;
+            color: red;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+
+        /* Adjusted explanation to display block when correct */
+        .explanation.correct {
+            display: block;
+            color: green;
         }
     </style>
-
-
 </head>
 <body>
-
     <nav>
         <ul>
             <li><a href="{{ url_for('index')}}">Upload</a></li>
@@ -64,15 +131,10 @@
             <li><a href="{{ url_for('feedback') }}">Feedback</a></li>
         </ul>
     </nav>
-<div class="container">
-<h1>Phishing Email Training</h1>
-<!-- Add example phishing email image here -->
-<img src="/static/PhishingEmailExample.png" alt="Example Phishing Email">
-
-<h2>Questions</h2>
-
-<!-- Add questionnaire here -->
-<form id="training-form">
+    <div class="container">
+        <h1>Phishing Email Training</h1>
+        <img src="/static/PhishingEmailExample.png" alt="Example Phishing Email">
+        <form id="training-form">
     <div class="question">
         <label for="question1">What is unusual about where this email came from?</label><br>
         <input type="radio" id="question1-option1" name="question1" value="Amazon">
@@ -120,8 +182,8 @@
     <button type="button" onclick="submitForm()">Submit</button>
 </form>
 
-<!-- Add space to display feedback -->
 <div id="feedback"></div>
+</div>
 
 <script>
     function submitForm() {
@@ -151,7 +213,7 @@
     }
 </script>
 
-</div>
+
 
 <!-- Add any necessary scripts to handle form submission and display feedback -->
 </body>
