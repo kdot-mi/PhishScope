@@ -24,6 +24,7 @@ from email.utils import parseaddr
 import pdfplumber
 import docx
 import chardet
+import time
 
 
 app = Flask(__name__)
@@ -219,12 +220,12 @@ def attachment_upload():
 
     # Retrieve the file from the form
     file = request.files['attachment']
-    
+
     # Check if the filename is not empty and allowed
     if file.filename == '':
         flash('No selected file')
         return redirect(url_for('index'))
-    
+
     if file and allowed_file(file.filename):
         # Prepare the request to VirusTotal
         files = {'file': (file.filename, file.stream, 'application/octet-stream')}
@@ -232,32 +233,39 @@ def attachment_upload():
 
         # Send the file to the VirusTotal API for scanning
         response = requests.post('https://www.virustotal.com/api/v3/files', files=files, headers=headers)
-        
+
         # Check if the request was successful
         if response.status_code == 200:
             json_response = response.json()
             resource_id = json_response['data']['id']
-        
-        # Wait for 15 seconds before attempting to retrieve the report
-            sleep(15)
 
-        # Make a GET request to retrieve the file report
-            report_url = f"https://www.virustotal.com/api/v3/analyses/{resource_id}"
-            report_headers = {"accept": "application/json", "x-apikey": VIRUSTOTAL_API_KEY}
-            report_response = requests.get(report_url, headers=report_headers)
-
-        if report_response.status_code == 200:
-            report = report_response.json()
-            stats = report['data']['attributes']['stats']
-    
-    # Instead of redirecting, render the 'upload.html' template with the results
-            return render_template('upload.html', stats=stats, show_results=True, current_time=time.time())
+            # Poll for the analysis results
+            report = poll_for_analysis_results(resource_id)
+            if report:
+                stats = report['data']['attributes']['stats']
+                return render_template('upload.html', stats=stats, show_results=True, current_time=time.time())
+            else:
+                flash('Failed to retrieve the report.')
         else:
-            flash('Failed to retrieve the report.')
-    else:
-        flash('Failed to scan the file. Please try again.')
+            flash('Failed to scan the file. Please try again.')
 
     return redirect(url_for('index'))
+
+def poll_for_analysis_results(resource_id, max_attempts=30, delay=15):
+    attempts = 0
+    report_headers = {"accept": "application/json", "x-apikey": VIRUSTOTAL_API_KEY}
+    report_url = f"https://www.virustotal.com/api/v3/analyses/{resource_id}"
+
+    while attempts < max_attempts:
+        report_response = requests.get(report_url, headers=report_headers)
+        if report_response.status_code == 200:
+            report = report_response.json()
+            if report['data']['attributes']['status'] == 'completed':
+                return report
+        attempts += 1
+        time.sleep(delay)
+
+    return None
 
 @app.route('/url', methods=['POST'])
 def scan_url():
