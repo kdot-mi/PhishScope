@@ -261,6 +261,7 @@ def attachment_upload():
 
 @app.route('/url', methods=['POST'])
 def scan_url():
+    human_readable_date = None  # Initialize to handle the case where no date is found
     url_to_scan = request.form['url']
     submission_headers = {
         "accept": "application/json",
@@ -270,7 +271,6 @@ def scan_url():
     payload = {"url": url_to_scan}
     response = requests.post('https://www.virustotal.com/api/v3/urls', data=payload, headers=submission_headers)
     print(response)
-    #sleep(5)  # Delay to wait for the analysis to complete
     
     if response.status_code == 200:
         url_id = response.json()['data']['id'].split('-')[1]
@@ -288,32 +288,34 @@ def scan_url():
             if whois_response.status_code == 200:
                 whois_data = whois_response.json()
                 creation_date = None
-                for data_entry in whois_data['data']:
+                for data_entry in whois_data.get('data', []):
                     whois_map = data_entry.get('attributes', {}).get('whois_map', {})
                     creation_date = whois_map.get('Creation Date')
                     if creation_date:
                         match = re.search(r'\d{4}-\d{2}-\d{2}', creation_date)
                         if match:
-                            # Extract the matched date string
                             date_part = match.group(0)
-                            # Parse the date part
                             parsed_date = datetime.strptime(date_part, "%Y-%m-%d")
-                            # Format it into the desired format
                             human_readable_date = parsed_date.strftime("%m/%d/%Y")
-                        break  # Stop after finding the first creation date
+                            break  # Found a valid date, break out of the loop
 
             results_file = os.path.join(app.root_path, 'url_scan_results.txt')
             print("Executing file SAVE")
             with open(results_file, 'a') as f:
                 f.write(f'URL: {url_to_scan}\n')
                 f.write(f'Results: {str(results)}\n\n')
-                f.write(f'WHOIS Data: {whois_data}\n\n')
-            return render_template('upload.html', show_url_results=True, stats=results, creation_date=human_readable_date, current_time=time.time())
+                f.write(f'WHOIS Data: {str(whois_data)}\n\n')
+
+            return render_template('upload.html', show_url_results=True, stats=results, creation_date=human_readable_date or "Not Available", current_time=time.time())
+
         else:
             print(f"Error: {report_response.status_code}")
             print(report_response.text)  # Print the error response
-    
-    return redirect(url_for('index'))
+            return redirect(url_for('index'))  # Redirect or handle the error as appropriate
+    else:
+        print(f"Error scanning URL: {response.status_code}")
+        print(response.text)
+        return redirect(url_for('error_page', error=response.text))  # Redirect to an error handling page
 
 @app.route('/analytics')
 def analytics():
