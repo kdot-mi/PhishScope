@@ -251,7 +251,7 @@ def attachment_upload():
 
     return redirect(url_for('index'))
 
-def poll_for_analysis_results(resource_id, max_attempts=60, delay=1):
+def poll_for_analysis_results(resource_id, max_attempts=60, delay=15):
     attempts = 0
     report_headers = {"accept": "application/json", "x-apikey": VIRUSTOTAL_API_KEY}
     report_url = f"https://www.virustotal.com/api/v3/analyses/{resource_id}"
