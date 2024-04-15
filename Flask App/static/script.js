@@ -15,6 +15,9 @@ function showContent(id) {
 
     // Show the selected content div
     document.getElementById(id).style.display = 'block';
+
+    // Clear scan results when switching mini-nav bar
+    document.getElementById("scan-results").style.display = 'none';
 }
 
 var slider = document.getElementById("rating");
