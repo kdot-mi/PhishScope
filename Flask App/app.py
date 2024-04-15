@@ -239,7 +239,7 @@ def attachment_upload():
             resource_id = json_response['data']['id']
         
         # Wait for 15 seconds before attempting to retrieve the report
-            #sleep(15)
+            sleep(15)
 
         # Make a GET request to retrieve the file report
             report_url = f"https://www.virustotal.com/api/v3/analyses/{resource_id}"
