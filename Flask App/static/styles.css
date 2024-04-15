@@ -272,3 +272,30 @@ textarea#feedback {
     align-items: center;
     height: 75vh;
 }
+
+.training-btn{
+    background: white !important;
+    color: black !important;
+    font-family: 'Poppins', sans-serif;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none !important;
+    cursor: pointer;
+    font-size: 20px;
+    margin-top: 20px;
+    box-shadow: 7px 7px 12px rgba(0, 0, 0, 0.5) !important;
+}
+
+
+.training-btn:hover{
+    background: #B5AFCB !important;
+    color: white !important;
+}
+
+.training-btn:active,
+.training-btn:focus,
+.training-btn:focus-visible {
+    outline: none !important;
+    border: none !important;
+    box-shadow: 7px 7px 12px rgba(0, 0, 0, 0.5) !important;
+}

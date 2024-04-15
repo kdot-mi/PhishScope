@@ -145,7 +145,7 @@ def upload_file():
             else:
                 # Flash message for benign or other non-phishing labels
                 flash(f"{label.capitalize()} score: {score}")
-                flash('Content deemed safe.')
+                flash('Content Deemed Safe')
 
         else:
             flash('No results from phishing check.')
