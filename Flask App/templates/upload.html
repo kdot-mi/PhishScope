@@ -119,7 +119,7 @@
         </div>
 
         {% if show_results %}
-        <div class="text-center mt-4">
+        <div class="text-center mt-4" id="scan-results" style="color: white;">
             <h3>Scan Results</h3>
             <p>Malicious: {{ stats.malicious }}</p>
             <p>Suspicious: {{ stats.suspicious }}</p>
@@ -131,7 +131,7 @@
     </div>
 
         {% if show_url_results %}
-        <div class="text-center mt-4">
+        <div class="text-center mt-4" id="scan-results" style="color: white;">
             <h3>URL Scan Results</h3>
             <p>Malicious: {{ stats.malicious }}</p>
             <p>Suspicious: {{ stats.suspicious }}</p>

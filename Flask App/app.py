@@ -239,7 +239,7 @@ def attachment_upload():
             resource_id = json_response['data']['id']
         
         # Wait for 15 seconds before attempting to retrieve the report
-            sleep(15)
+            #sleep(15)
 
         # Make a GET request to retrieve the file report
             report_url = f"https://www.virustotal.com/api/v3/analyses/{resource_id}"
@@ -270,7 +270,7 @@ def scan_url():
     payload = {"url": url_to_scan}
     response = requests.post('https://www.virustotal.com/api/v3/urls', data=payload, headers=submission_headers)
     print(response)
-    sleep(5)  # Delay to wait for the analysis to complete
+    #sleep(5)  # Delay to wait for the analysis to complete
     
     if response.status_code == 200:
         url_id = response.json()['data']['id'].split('-')[1]
