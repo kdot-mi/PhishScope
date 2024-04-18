@@ -13,6 +13,7 @@ body{
     background: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);
     margin: 0;
     overflow: auto;
+    overflow-x: hidden;
 }
 
 .container{
@@ -228,6 +229,10 @@ nav ul{
     margin-bottom: 10px;
 }
 
+#email{
+    padding-left: 10px;
+}
+
 .container2 textarea {
     padding: 10px;
     font-size: 16px;
@@ -288,8 +293,9 @@ textarea#feedback {
 
 
 .training-btn:hover{
-    background: #B5AFCB !important;
+    background: linear-gradient(to right, #6a11cb 0%, #2575fc 100%) !important;
     color: white !important;
+    border: 1px solid white !important;
 }
 
 .training-btn:active,
@@ -299,3 +305,158 @@ textarea#feedback {
     border: none !important;
     box-shadow: 7px 7px 12px rgba(0, 0, 0, 0.5) !important;
 }
+
+/* Analytics Page */
+.custom-container2{
+    width: 70%;
+    background: #fff;
+    border-radius: 5px;
+    padding: 30px;
+    box-shadow: 7px 7px 12px rgba(0, 0, 0, 0.5);
+    margin-top: 20px;
+    margin: auto;
+    margin-bottom: 20px;
+}
+
+#download-pdf{
+    display: block;
+    background: #f0f0f0;
+    color: black;
+    font-family: 'Poppins', sans-serif;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    margin: 10px auto;
+    border: 1px solid #ccc;
+}
+
+#download-pdf:hover{
+    background: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);
+    color: white;
+}
+
+/* Chatbot Page */
+.custom-container3{
+    width: 750px;
+    background: #fff;
+    border-radius: 5px;
+    padding: 30px;
+    box-shadow: 7px 7px 12px rgba(0, 0, 0, 0.5);
+    margin: auto;
+    margin-top: 10%;
+}
+
+#chatbox {
+    padding: 10px;
+    height: 300px;
+    overflow-y: auto;
+}
+
+#user_send_form {
+    display: flex;
+    justify-content: space-between;
+}
+#user_input {
+    flex-grow: 1;
+    margin-right: 10px;
+    width: 90%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #c0c0c0;
+
+}
+
+#user_send{
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #c0c0c0;
+    cursor: pointer;
+    width: 50px;
+}
+
+#user_send:hover{
+    background: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);
+    color: white;
+}
+
+#chatbox, #user_input{
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Blacklist Page */
+.custom-container4{
+    width: 750px;
+    background: #fff;
+    border-radius: 5px;
+    padding: 30px;
+    box-shadow: 7px 7px 12px rgba(0, 0, 0, 0.5);
+    margin: auto;
+    margin-top: 10%;
+    font-family: 'Poppins', sans-serif;
+}
+
+.blacklist-form{
+    display: flex;
+    justify-content: space-between;
+}
+
+.blacklistemail{
+    flex-grow: 1;
+    margin-right: 10px;
+    width: 350%;
+    padding-left: 10px;
+}
+
+.blacklist-btn{
+   width: 10px;
+}
+
+#blacklist-toggle{
+    display: block;
+    background: #f0f0f0;
+    color: black;
+    font-family: 'Poppins', sans-serif;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+}
+
+#blacklist-toggle:hover{
+    background: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);
+    color: white;
+    border: none;
+}
+
+#blacklist-list li {
+    list-style-type: none;
+}
+
+/* Training Page */
+.custom-container5{
+    width: 800px;
+    background: #fff;
+    border-radius: 5px;
+    padding: 30px;
+    box-shadow: 7px 7px 12px rgba(0, 0, 0, 0.5);
+    margin: 10px auto;
+    font-family: 'Poppins', sans-serif;
+}
+
+.question{
+    font-size: 15px;
+    margin-bottom: 10px;
+    padding-left: 10px;
+}
+
+.explanation, .wrong, .correctanswer{
+    display: none;
+}
+

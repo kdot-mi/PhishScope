@@ -21,80 +21,8 @@
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.svg') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles2.css', v=current_time) }}">
-    <style>
-        body, html {
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            background: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);
-        }
 
-        .container {
-            width: 100%;
-            max-width: 600px; /* Same as blacklist manager */
-            margin: 0 auto;
-            padding: 20px;
-            background-color: rgba(255, 255, 255, 0.9);
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        input[type="text"],
-        input[type="submit"] {
-            width: 80%; /* Adjust as needed to match blacklist manager */
-            margin: 10px auto;
-            display: block;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-
-        input[type="submit"] {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        input[type="submit"]:hover {
-            background-color: #0056b3;
-        }
-
-        label {
-            display: block;
-            margin-bottom: .5rem;
-            font-weight: bold;
-        }
-
-        p {
-            width: 80%; /* Match width with input fields */
-            margin: 10px auto;
-            display: block;
-            padding: 10px;
-            border: 1px solid #ccc; /* Match border with input fields */
-            border-radius: 5px; /* Already matches input fields */
-            background-color: #ffffff; /* Change to plain white to match input field background */
-            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: add subtle inner shadow for depth */
-            font-size: 0.9em; /* Adjust font size as needed */
-            text-align: left; /* Align text to match label/input text alignment */
-        }
-
-        h2 {
-            width: 80%; /* Match width with input fields */
-            margin: 10px auto;
-            padding: 10px;
-            text-align: left;
-            color: #333; /* You can choose any color that fits your design */
-            font-size: 1em; /* Match with the input label size or adjust as needed */
-        }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css', v=current_time) }}">
 </head>
 <body>
     <nav>
@@ -106,17 +34,36 @@
             <li><a href="{{ url_for('feedback') }}">Feedback</a></li>
         </ul>
     </nav>
-    <div class="container"> <!-- Centered container for chatbot content -->
-        <h1>Chatbot</h1>
-        <form method="post" action="{{ url_for('chatbot') }}">
-            <label for="user_input">Enter your message:</label>
-            <input type="text" id="user_input" name="user_input" required>
-            <input type="submit" value="Send">
-        </form>
-        {% if response %}
-            <h2>Chatbot response:</h2>
-            <p>{{ response }}</p>
-        {% endif %}
+    <div class="custom-container3">
+        <h1 style="text-align: center;">Chatbot</h1>
+        <div id="chatbox">
+            <!-- Chat history -->
+            {% for message in chat_history %}
+                <div class="chat-message user-message">
+                    <h4>You:</h4>
+                    <p>{{ message.user }}</p>
+                </div>
+                <div class="chat-message bot-message">
+                    <h4>Bot:</h4>
+                    <p id="bot-message">{{ message.bot }}</p>
+                </div>
+            {% endfor %}
+            
+        </div>
+        <!-- User input -->
+        <div class="chat-message user-message">
+            <form method="post" action="{{ url_for('chatbot') }}" class="user_send_form">
+                <input type="text" id="user_input" name="user_input" required placeholder="Ask a Question about Phishing.">
+                <input type="submit" value="➤" id="user_send">
+            </form>
+        </div>
     </div>
+
+    <script>
+        var chatbox = document.getElementById('chatbox');
+        chatbox.scrollTop = chatbox.scrollHeight;
+    </script>
+
+    <script src="{{ url_for('static', filename='script.js', v=current_time) }}"></script>
 </body>
 </html>

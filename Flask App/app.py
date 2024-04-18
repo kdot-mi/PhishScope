@@ -1,4 +1,4 @@
-from flask import Flask, request, redirect, url_for, render_template, flash
+from flask import Flask, request, redirect, url_for, render_template, flash, session
 import requests
 import os
 import time
@@ -401,15 +401,28 @@ def analytics():
     scatter_div = plotly.offline.plot(scatter_plot, output_type='div', include_plotlyjs=False)
 
     return render_template('analytics.html', pie_div=pie_div, line_div=line_div, bar_div=bar_div, scatter_div=scatter_div)
-
+ 
 @app.route('/chatbot', methods=['GET', 'POST'])
 def chatbot():
+    if request.method == 'GET':
+        # Clear the chat history at the beginning of a new conversation
+        if 'chat_history' in session:
+            session.pop('chat_history', None)
+
+    if 'chat_history' not in session:
+        session['chat_history'] = []
+
     if request.method == 'POST':
         user_input = request.form['user_input']
         response = generate_response(user_input)
-        return render_template('chatbot.html', response=response)
-    return render_template('chatbot.html')
 
+        # Store the user input and bot response in the session
+        session['chat_history'].append({'user': user_input, 'bot': response})
+
+    # Tell the session that it has been modified
+    session.modified = True
+
+    return render_template('chatbot.html', chat_history=session.get('chat_history', []))
 
 def generate_response(prompt):
     response = client.chat.completions.create(model="gpt-3.5-turbo",

@@ -25,39 +25,6 @@
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.svg') }}">
-    <style>
-        body, html {
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            background: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);
-            padding-top: 60px; /* Adjust if you have a fixed navbar */
-        }
-
-        .container {
-            width: 100%;
-            max-width: 800px; /* Adjust based on your preference */
-            margin: auto;
-            padding: 20px;
-            box-sizing: border-box;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        /* Targeting the divs that contain the Plotly graphs */
-        .container > div {
-            width: 100%; /* This will make the div take up the full width of its parent */
-            margin-bottom: 20px; /* Adds spacing between each graph */
-        }
-
-        h1, h2 {
-            width: 100%;
-            text-align: center;
-        }
-    </style>
 </head>
 <body>
     <nav>
@@ -69,8 +36,8 @@
             <li><a href="{{ url_for('feedback') }}">Feedback</a></li>
         </ul>
     </nav>
-    <div class="container">
-        <h1>Email Analytics</h1>
+    <div class="custom-container2">
+        <h1 style="text-align: center;"> Analytics</h1>
 
         <h2>Safe vs. Unsafe Emails</h2>
         <div class="plotly-graph">{{ pie_div|safe }}</div>
@@ -83,10 +50,10 @@
 
         <h2>Email Score vs. Analysis Date</h2>
         <div class="plotly-graph">{{ scatter_div|safe }}</div>
-    </div>
 
-    <!-- Button to trigger PDF download -->
-    <button id="download-pdf" style="margin: 20px;">Download PDF</button>
+        <!-- Button to trigger PDF download -->
+        <button id="download-pdf">Download PDF</button>
+    </div>
 
     <script>
         document.getElementById('download-pdf').addEventListener('click', function() {
