@@ -11,6 +11,8 @@
 *PhishScope UML Diagram*
 </div>
 
+Visit Website: <a href="https://rpg1.pythonanywhere.com/">***PhishScope***</a>
+
 ## Getting Started
 ### VirusTotal API
 *PhishScope* uses the *VirusTotal* API for uploading and scanning files. This allows *PhishScope* to check if a file is malicious or benign based on *VirusTotal*'s database. Additionally, it allows *PhishScope* to submit and scan URLs to determine if they lead to harmful content.
@@ -84,6 +86,9 @@ Install Database Libraries
 <br>
 <code>$ pip install Flask-Migrate</code>
 
+**CHECK** the <a href="Flask App\requirements.txt">**requirements.txt**</a> file for any other dependencies missing in the manual install. 
+<br>
+
 **You can now run the development server:**
 <br>
 Make sure you are in the *Phishing-Detection-App\Flask App* directory
@@ -96,26 +101,53 @@ The default Flask WSGI server (<a href="https://werkzeug.palletsprojects.com/en/
 
 ### Usage
 <div align="center"><img src="images\webUI.png">
-<i>Prototype UI</i>
-</div><br>
-
-The interface has an input area to enter a file and an upload button to submit to the *VirusTotal* API. 
-
-**Proto Demo:**<br>
-<div align="center">
-<img src="images\EmailScanner.gif" align="center">
-<i>Email  Scanner</i>
-</div><br>
-
-The user will input a file and click upload. That file will get sent to the *VirusTotal* API and return results labeling the file malicious or benign. It will also give a malicious score from 0% to 100%.
+<i>User Interface</i>
+<br>
+</div>
+<br>
+There is a top navbar that allows access to the <b>Upload</b> (current/homepage), <b>Analytics</b>, <b>Chatbot</b>, <b>Blacklist</b>, and <b>Feedback</b> pages. There is another navbar or mininav bar that the user can select between <b>Email Upload</b>, <b>Attachment Scanner</b>, and <b>URL Check</b> parts of the tool. The initial UI shows an input area to enter a file and an upload button to submit to the <i>VirusTotal</i> API. 
 
 <br>
 <div align="center">
-<img src="images\AttachmentScanner.gif">
-<i>Attachment Scanner</i>
-</div><br>
+<video controls>
+    <source src="images/final_demo4 - 1713429072211.mp4" type="video/mp4">
+</video><i>Demo</i>
+<br>
+<br>
+</div>
 
-The user will input a file and click upload. That file will get sent to the *VirusTotal* API and return 'Scan Results'. 
+**Email Upload**
+<br>
+The user will input a file and click 'Upload'. That file will get sent to the *VirusTotal* API and return results labeling the file malicious or benign. It will also give a malicious score from 0% to 100%.
+
+**Attachment Scanner**
+<br>
+The user will input a file and click 'Upload'. That file will get sent to the *VirusTotal* API and return 'Scan Results'. 
+
+**URL Check**
+<br>
+THe user will input a URL and click 'Check URL'. It will return Results similar to the 'Scan Results' from the Attachment Scanner, additionally it will show WHOIS information (domain registered date).
+
+**Simulated Training**
+<br>
+A mini quiz that trains and explains phishing techniques to the user.
+
+**Analytics**
+<br>
+Analytics dashboard that shows visualized statistics about the emails that have been analyzed. For example, split between safe and unsafe emails. The user can also download a PDF of the Analytics page.
+
+**Chatbot**
+<br>
+Integration of *OpenAI API*, that allows users to ask for more information about phishing emails.
+
+**Blacklist**
+<br>
+Allows users to build a list of known phishing email addresses. If an email was detected to be suspicious in one of the scanners, it will automatically be blacklisted. Users can also manually add/remove emails.
+
+**Feedback**
+<br>
+User Feedback system that allows users to rate the accuracy and usefulness of phishing email detection, and provide  provide feedback or suggestions.
+
 
 ## Resources
 ### Data Set
