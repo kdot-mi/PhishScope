@@ -34,8 +34,8 @@ from flask_mail import Mail, Message
 
 app.config['MAIL_SERVER']='smtp.office365.com'
 app.config['MAIL_PORT'] = 587
-app.config['MAIL_USERNAME'] = 'phishscope@outlook.com'
-app.config['MAIL_PASSWORD'] = 'seniorproject2024'
+app.config['MAIL_USERNAME'] = 'YOUREMAIL@OUTLOOK.COM'
+app.config['MAIL_PASSWORD'] = 'YOUREMAILPASSWORD'
 app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USE_SSL'] = False
 
