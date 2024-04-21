@@ -11,8 +11,6 @@
 *PhishScope UML Diagram*
 </div>
 
-Visit Website: <a href="https://rpg1.pythonanywhere.com/">***PhishScope***</a>
-
 ## Getting Started
 ### Email
 To use the *Feedback* functionality, go into the **app.py** file and search (<code>ctrl + f</code>) for:
@@ -116,14 +114,7 @@ The default Flask WSGI server (<a href="https://werkzeug.palletsprojects.com/en/
 <br>
 There is a top navbar that allows access to the <b>Upload</b> (current/homepage), <b>Analytics</b>, <b>Chatbot</b>, <b>Blacklist</b>, and <b>Feedback</b> pages. There is another navbar or mininav bar that the user can select between <b>Email Upload</b>, <b>Attachment Scanner</b>, and <b>URL Check</b> parts of the tool. The initial UI shows an input area to enter a file and an upload button to submit to the <i>VirusTotal</i> API. 
 
-<br>
-<div align="center">
-<video controls>
-    <source src="images/final_demo4 - 1713429072211.mp4" type="video/mp4">
-</video><i>Demo</i>
-<br>
-<br>
-</div>
+### Visit Website: <a href="https://rpg1.pythonanywhere.com/">***PhishScope***</a>
 
 **Email Upload**
 <br>
