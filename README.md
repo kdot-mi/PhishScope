@@ -14,6 +14,15 @@
 Visit Website: <a href="https://rpg1.pythonanywhere.com/">***PhishScope***</a>
 
 ## Getting Started
+### Email
+To use the *Feedback* functionality, go into the **app.py** file and search (<code>ctrl + f</code>) for:
+```
+app.config['MAIL_USERNAME'] = 'YOUREMAIL@OUTLOOK.COM'
+app.config['MAIL_PASSWORD'] = 'YOUREMAILPASSWORD'
+```
+Replace, 'YOUREMAIL<area>@OUTLOOK.COM' and 'YOUREMAILPASSWORD' with your preferred email and passowrd.
+The feedback page will send user's responses to that email.
+
 ### VirusTotal API
 *PhishScope* uses the *VirusTotal* API for uploading and scanning files. This allows *PhishScope* to check if a file is malicious or benign based on *VirusTotal*'s database. Additionally, it allows *PhishScope* to submit and scan URLs to determine if they lead to harmful content.
 
